@@ -17,7 +17,7 @@ export const NFTProvider = ({ children }) => {
   const fetchNFTs = async () => {
     setIsLoadingNFT(false);
 
-    const provider = new ethers.providers.JsonRpcProvider();
+    const provider = new ethers.providers.JsonRpcProvider('https://mainnet.infura.io/v3/4b36fd3a66de4df2a14959056f390144');
     const contract = fetchContract(provider);
 
     const data = await contract.fetchMarketItems();

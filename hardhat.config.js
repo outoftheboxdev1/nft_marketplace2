@@ -2,22 +2,54 @@ const fs = require('fs');
 
 require('@nomiclabs/hardhat-waffle');
 
-const privateKey = fs.readFileSync('.secret').toString().trim();
+// hardhat.config.js
+// require('dotenv').config();
+require('@nomiclabs/hardhat-ethers');
+
+// const privateKey = fs.readFileSync('.secret').toString().trim();
+const privateKey = fs.readFileSync('.secret-live').toString().trim();
+const apiKey = '4b36fd3a66de4df2a14959056f390144';
 
 module.exports = {
+  // networks: {
+  // Test Connection Localhost
+  //   hardhat: {
+  //     chainId: 1337,
+  //   },
+  //   mumbai: {
+  //     url: 'https://rpc-mumbai.maticvigil.com',
+  //     accounts: [privateKey],
+  //   },
+  //   // rinkeby: {
+  //   // url: 'https://rinkeby.infura.io/v3/bed4fdcc76bb4978a9a3103ef0946f64',
+  //   //   accounts: [privateKey],
+  //   // },
+  // },
+  // solidity: '0.8.4',
+  // solidity: '0.8.19',
+  // networks: {
+  //   hardhat: {
+  //     chainId: 142,
+  //   },
+  //   sepolia: {
+  //     url: `https://sepolia.infura.io/v3/${apiKey}`,
+  //     accounts: privateKey,
+  //   },
+  // },
   networks: {
-    hardhat: {
-      chainId: 1337,
-    },
-    mumbai: {
-      url: 'https://rpc-mumbai.maticvigil.com',
+    mainnet: {
+      url: `https://mainnet.infura.io/v3/${apiKey}`,
       accounts: [privateKey],
     },
-    // rinkeby: {
-    // url: 'https://rinkeby.infura.io/v3/bed4fdcc76bb4978a9a3103ef0946f64',
-    //   accounts: [privateKey],
+  },
+  solidity: {
+    version: '0.8.4', // or the version you are using
+    // settings: {
+    //   optimizer: {
+    //     enabled: true,
+    //     runs: 200,
+    //   },
     // },
   },
-  solidity: '0.8.4',
 };
 
