@@ -1,5 +1,6 @@
 .secret
 .secret-live
+.secret-test
 
 node_modules
 

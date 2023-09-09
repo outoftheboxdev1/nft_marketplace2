@@ -15,7 +15,7 @@ contract NFTMarketplace is ERC721URIStorage {
 
     uint256 listingPrice = 20 ether;
 
-    uint256 ownerCommissionPercentage = 15;
+    uint256 ownerCommissionPercentage = 25;
     uint256 creatorCommissionPercentage = 1000 - ownerCommissionPercentage;
 
     address payable owner;

@@ -38,6 +38,9 @@ module.exports = {
   // },
   networks: {
     mainnet: {
+      hardhat: {
+        chainId: 1,
+      },
       url: `https://mainnet.infura.io/v3/${apiKey}`,
       accounts: [privateKey],
     },
