@@ -17,7 +17,7 @@ export const NFTProvider = ({ children }) => {
   const fetchNFTs = async () => {
     setIsLoadingNFT(false);
 
-    const provider = new ethers.providers.JsonRpcProvider('https://mainnet.infura.io/v3/4b36fd3a66de4df2a14959056f390144');
+    const provider = new ethers.providers.JsonRpcProvider('https://sepolia.infura.io/v3/ead6becc90db437c83fede80213d3902');
     const contract = fetchContract(provider);
 
     const data = await contract.fetchMarketItems();
@@ -42,7 +42,7 @@ export const NFTProvider = ({ children }) => {
     const signer = provider.getSigner();
 
     const contract = fetchContract(signer);
-    const data = type === 'fetchItemsListed' ? await contract.fetchItemsListed() : await contract.fetchMyNFTs();
+    const data = type === 'fetchItemsListed' ? await contract.fetchItemsListed() : await contract.fetchMyItems();
 
     const items = await Promise.all(data.map(async ({ tokenId, seller, owner, price: unformattedPrice }) => {
       const tokenURI = await contract.tokenURI(tokenId);

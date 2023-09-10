@@ -69,7 +69,7 @@ const CreateItem = () => {
     const data = JSON.stringify({ name, description, image: fileUrl });
     try {
       const added = await client.add(data);
-      const url = `https://ipfs.infura.io/ipfs/${added.path}`;
+      const url = `https://ever-traded.infura-ipfs.io/ipfs/${added.path}`;
       /* after file is uploaded to IPFS, pass the URL to save it on Polygon */
       await createSale(url, formInput.price);
       router.push('/');

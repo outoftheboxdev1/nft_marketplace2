@@ -8,7 +8,7 @@ require('@nomiclabs/hardhat-ethers');
 
 // const privateKey = fs.readFileSync('.secret').toString().trim();
 const privateKey = fs.readFileSync('.secret-live').toString().trim();
-const apiKey = '4b36fd3a66de4df2a14959056f390144';
+const apiKey = 'ead6becc90db437c83fede80213d3902';
 
 module.exports = {
   // networks: {
@@ -26,33 +26,33 @@ module.exports = {
   //   // },
   // },
   // solidity: '0.8.4',
-  // solidity: '0.8.19',
-  // networks: {
-  //   hardhat: {
-  //     chainId: 142,
-  //   },
-  //   sepolia: {
-  //     url: `https://sepolia.infura.io/v3/${apiKey}`,
-  //     accounts: privateKey,
-  //   },
-  // },
+  solidity: '0.8.19',
   networks: {
-    mainnet: {
+    sepolia: {
       hardhat: {
-        chainId: 1,
+        chainId: 142,
       },
-      url: `https://mainnet.infura.io/v3/${apiKey}`,
+      url: `https://sepolia.infura.io/v3/${apiKey}`,
       accounts: [privateKey],
     },
   },
-  solidity: {
-    version: '0.8.4', // or the version you are using
-    // settings: {
-    //   optimizer: {
-    //     enabled: true,
-    //     runs: 200,
-    //   },
-    // },
-  },
+  // networks: {
+  //   mainnet: {
+  //     hardhat: {
+  //       chainId: 1,
+  //     },
+  //     url: `https://mainnet.infura.io/v3/${apiKey}`,
+  //     accounts: [privateKey],
+  //   },
+  // },
+  // solidity: {
+  //   version: '0.8.4', // or the version you are using
+  //   // settings: {
+  //   //   optimizer: {
+  //   //     enabled: true,
+  //   //     runs: 200,
+  //   //   },
+  //   // },
+  // },
 };
 
