@@ -72,7 +72,6 @@ export const NFTProvider = ({ children }) => {
     setIsLoadingNFT(true);
     await transaction.wait();
   };
-
   const buyNft = async (nft) => {
     const web3Modal = new Web3Modal();
     const connection = await web3Modal.connect();

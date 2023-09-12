@@ -13,7 +13,7 @@ contract NFTMarketplace is ERC721URIStorage {
     Counters.Counter private _tokenIds;
     Counters.Counter private _itemsSold;
 
-    uint256 listingPrice = 0.003 ether;
+    uint256 listingPrice = 0.001 ether;
 
     uint256 ownerCommissionPercentage = 25;
     uint256 creatorCommissionPercentage = 1000 - ownerCommissionPercentage;
@@ -156,32 +156,26 @@ contract NFTMarketplace is ERC721URIStorage {
     }
 
     function fetchMyItems() public view returns (MarketItem[] memory) {
-        uint totalItemCount = _tokenIds.current();
-        uint itemCount = 0;
-        uint currentIndex = 0;
+      uint totalItemCount = _tokenIds.current();
+      uint itemCount = 0;
+      uint currentIndex = 0;
 
-        for(uint i = 0; i < totalItemCount; i++) {
-            if(idToMarketItem[i+1].owner == msg.sender) {
-                itemCount += 1;
-
-            }
+      for (uint i = 0; i < totalItemCount; i++) {
+        if (idToMarketItem[i + 1].owner == msg.sender) {
+          itemCount += 1;
         }
-        
-        MarketItem[] memory items = new MarketItem[](itemCount);
+      }
 
-        for(uint i = 0; i < totalItemCount; i++) {
-            if(idToMarketItem[i+1].owner == msg.sender) {
-                uint currentId = i +1;
-
-                MarketItem storage currentItem = idToMarketItem[currentId];
-
-                items[currentIndex] = currentItem;
-
-                currentIndex += 1;
-            }
+      MarketItem[] memory items = new MarketItem[](itemCount);
+      for (uint i = 0; i < totalItemCount; i++) {
+        if (idToMarketItem[i + 1].owner == msg.sender) {
+          uint currentId = i + 1;
+          MarketItem storage currentItem = idToMarketItem[currentId];
+          items[currentIndex] = currentItem;
+          currentIndex += 1;
         }
-
-        return items;
+      }
+      return items;
     }
 
     function fetchItemsListed() public view returns (MarketItem[] memory) {
