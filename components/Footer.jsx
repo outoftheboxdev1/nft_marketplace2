@@ -19,6 +19,8 @@ const FooterLinks = ({ heading, items, extraClasses, urls }) => (
   </div>
 );
 
+const socialUrls = ['https://www.instagram.com/evertradedofficial', 'https://twitter.com/evertraded', 'https://t.me/evertradedofficial', 'https://discord.gg/UUrG9KQ5Nq'];
+
 const Footer = () => {
   const { theme } = useTheme();
 
@@ -45,7 +47,7 @@ const Footer = () => {
 
         <div className="flex-1 flexBetweenStart flex-wrap ml-10 md:ml-0 md:mt-8">
           <FooterLinks heading="EverTraded" items={['Explore', 'How it Works', 'Contact Us']} urls={['/', '/how-it-works', '/']} />
-          <FooterLinks heading="Support" items={['Help Center', 'Terms of service', 'Legal', 'Privacy policy']} urls={['/', '/', '/', '/']} extraClasses="ml-4" />
+          <FooterLinks heading="Support" items={['Help Center', 'Terms of service', 'Legal', 'Privacy policy']} urls={['/', '/tos', '/', '/privacy-policy']} extraClasses="ml-4" />
         </div>
       </div>
 
@@ -54,9 +56,11 @@ const Footer = () => {
           <p className="font-poppins dark:text-white text-nft-black-1 font-semibold text-base">EverTraded, Inc. All Rights Reserved</p>
           <div className="flex flex-row sm:mt-4">
             {[images.instagram, images.twitter, images.telegram, images.discord].map((image, index) => (
-              <div className="mx-2 cursor-pointer" key={`image ${index}`}>
-                <Image src={image} key={index} objectFit="contain" width={24} height={24} alt="social" className={theme === 'light' ? 'filter invert' : undefined} />
-              </div>
+              <Link href={socialUrls[index]}>
+                <div className="mx-2 cursor-pointer" key={`image ${index}`}>
+                  <Image src={image} key={index} objectFit="contain" width={24} height={24} alt="social" className={theme === 'light' ? 'filter invert' : undefined} />
+                </div>
+              </Link>
             ))}
           </div>
         </div>
