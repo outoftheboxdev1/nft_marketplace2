@@ -7,7 +7,6 @@ import { NFTContext } from '../context/NFTContext';
 import { getCreators } from '../utils/getTopCreators';
 import { shortenAddress } from '../utils/shortenAddress';
 import images from '../assets';
-import { makeid } from '../utils/makeId';
 
 const Home = () => {
   const { fetchNFTs } = useContext(NFTContext);
@@ -124,15 +123,6 @@ const Home = () => {
                       creatorImage={images[`creator${i + 1}`]}
                       creatorName={shortenAddress(creator.seller)}
                       creatorEths={creator.sumall}
-                    />
-                  ))}
-                  {[6, 7, 8, 9, 10].map((i) => (
-                    <CreatorCard
-                      key={`creator-${i}`}
-                      rank={i}
-                      creatorImage={images[`creator${i}`]}
-                      creatorName={`0x${makeid(3)}...${makeid(4)}`}
-                      creatorEths={10 - i * 0.534}
                     />
                   ))}
                   {!hideButtons && (

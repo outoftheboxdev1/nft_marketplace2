@@ -36,6 +36,10 @@ import left from './left.png';
 import headerbg from './headerbg.png';
 import loader from './loader.gif';
 import arrow from './arrow.png';
+import nftBunny from './nft-art-bunny.png';
+import banner01 from './banner01.png';
+import banner02 from './banner02.png';
+import banner03 from './banner03.png';
 
 export default {
   heartOutline,
@@ -76,4 +80,8 @@ export default {
   headerbg,
   loader,
   arrow,
+  nftBunny,
+  banner01,
+  banner02,
+  banner03,
 };
