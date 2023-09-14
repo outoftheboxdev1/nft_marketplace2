@@ -27,3 +27,5 @@ artifacts
 
 #vscode
 .vscode
+
+/profiles/*

@@ -8,7 +8,7 @@ const FooterLinks = ({ heading, items, extraClasses, urls }) => (
   <div className={`flex-1 justify-start items-start ${extraClasses}`}>
     <h3 className="font-poppins dark:text-white text-nft-black-1 font-semibold text-xl mb-10">{heading}</h3>
     {items.map((item, index) => (
-      <Link href={urls[index]}>
+      <Link key={item + index} href={urls[index]}>
         <p
           key={item + index}
           className="font-poppins dark:text-white text-nft-black-1 font-normal text-base cursor-pointer dark:hover:text-nft-gray-1 hover:text-nft-black-1 my-3"
@@ -56,7 +56,7 @@ const Footer = () => {
           <p className="font-poppins dark:text-white text-nft-black-1 font-semibold text-base">EverTraded, Inc. All Rights Reserved</p>
           <div className="flex flex-row sm:mt-4">
             {[images.instagram, images.twitter, images.telegram, images.discord].map((image, index) => (
-              <Link href={socialUrls[index]}>
+              <Link key={index} href={socialUrls[index]}>
                 <div className="mx-2 cursor-pointer" key={`image ${index}`}>
                   <Image src={image} key={index} objectFit="contain" width={24} height={24} alt="social" className={theme === 'light' ? 'filter invert' : undefined} />
                 </div>

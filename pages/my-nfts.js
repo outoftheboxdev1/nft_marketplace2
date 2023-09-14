@@ -1,9 +1,10 @@
 import { useEffect, useState, useContext } from 'react';
+import { useRouter } from 'next/router';
 import Image from 'next/image';
 
 import { NFTContext } from '../context/NFTContext';
 import { shortenAddress } from '../utils/shortenAddress';
-import { Loader, NFTCard, SearchBar, Banner } from '../components';
+import { Loader, NFTCard, SearchBar, Banner, Button } from '../components';
 import images from '../assets';
 
 const MyNFTs = () => {
@@ -12,6 +13,7 @@ const MyNFTs = () => {
   const [nftsCopy, setNftsCopy] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [activeSelect, setActiveSelect] = useState('Recently Added');
+  const router = useRouter();
 
   useEffect(() => {
     fetchMyNFTsOrCreatedNFTs()
@@ -81,6 +83,13 @@ const MyNFTs = () => {
           <p className="font-poppins dark:text-white text-nft-black-1 font-semibold text-2xl mt-6">{shortenAddress(currentAccount)}</p>
         </div>
       </div>
+
+      <Button
+        btnName="Edit Profile"
+        btnType="primary"
+        classStyles="relative -top-28 sm:left-40 left-48 sm:-top-24 rounded-xl"
+        handleClick={() => router.push('/editprofile')}
+      />
 
       {(!isLoading && nfts.length === 0) ? (
         <div className="flexCenter sm:p-4 p-16">
