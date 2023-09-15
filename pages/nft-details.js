@@ -45,6 +45,8 @@ const AssetDetails = () => {
   const [isLoading, setIsLoading] = useState(true);
   const router = useRouter();
 
+  const creatorImage = `/profiles/${encodeURIComponent(currentAccount)}.png`;
+
   useEffect(() => {
     // disable body scroll when navbar is open
     if (paymentModal || successModal) {
@@ -61,6 +63,21 @@ const AssetDetails = () => {
 
     setIsLoading(false);
   }, [router.isReady]);
+
+  const [imageExists, setImageExists] = useState(false); // Assume the image exists initially
+
+  useEffect(() => {
+    const checkImage = async () => {
+      try {
+        const response = await fetch(creatorImage, { method: 'HEAD' });
+        setImageExists(response.ok);
+      } catch (error) {
+        setImageExists(false);
+      }
+    };
+
+    checkImage();
+  }, [creatorImage]);
 
   const checkout = async () => {
     await buyNft(nft);
@@ -88,7 +105,11 @@ const AssetDetails = () => {
           <p className="font-poppins dark:text-white text-nft-black-1 text-xs minlg:text-base font-normal">Creator</p>
           <div className="flex flex-row items-center mt-3">
             <div className="relative w-12 h-12 minlg:w-20 minlg:h-20 mr-2">
-              <Image src={images.creator1} objectFit="cover" className="rounded-full" />
+              {imageExists ? (
+                <Image src={creatorImage} objectFit="cover" width={68} height={68} className="rounded-full" />
+              ) : (
+                <Image src={images.creator1} objectFit="cover" className="rounded-full" />
+              )}
             </div>
             <p className="font-poppins dark:text-white text-nft-black-1 text-sm minlg:text-lg font-semibold">{shortenAddress(nft.seller)}</p>
           </div>
