@@ -12,6 +12,7 @@ const editMyprofile = () => {
 
   const [file, setFile] = useState(null);
   const [previewUrl, setPreviewUrl] = useState(null);
+  const router = useRouter();
 
   const handleFileChange = (e) => {
     const selectedFile = e.target.files[0];
@@ -44,6 +45,7 @@ const editMyprofile = () => {
 
     const formData = new FormData();
     formData.append('file', file);
+    formData.append('user', currentAccount);
 
     try {
       const response = await fetch('api/upload', {
@@ -53,6 +55,7 @@ const editMyprofile = () => {
 
       if (response.ok) {
         console.log('File uploaded successfully');
+        router.replace('/my-nfts');
       // Handle success
       } else {
         console.error('File upload failed');
@@ -96,12 +99,13 @@ const editMyprofile = () => {
                           onClick={() => document.querySelector('input[type=file]').click()}
                         />
                       </label>
+                      <p className="font-poppins dark:text-white text-nft-black-1 font-semibold text-xs mt-7">Image format supported .png. Max 100mb.</p>
                     </p>
                   )}
                 </div>
                 <input
                   type="file"
-                  accept="image/*"
+                  accept="image/png"
                   onChange={handleFileChange}
                   style={{ display: 'none' }}
                 />

@@ -15,10 +15,11 @@ export default async function handler(req, res) {
   }
 
   const form = new formidable.IncomingForm();
-  form.uploadDir = path.join(process.cwd(), 'profiles'); // Set the upload directory
+  form.uploadDir = path.join(process.cwd(), 'public/profiles'); // Set the upload directory
 
   try {
     form.parse(req, async (err, fields, files) => {
+      const customFileName = fields.user;
       if (err) {
         console.error('Error parsing form:', err);
         return res.status(500).json({ error: 'An error occurred while parsing the form' });
@@ -37,14 +38,18 @@ export default async function handler(req, res) {
 
       // Get the old path from the uploaded file
       const oldPath = uploadedFile.filepath;
+      // Get the original filename
+      const originalFileName = uploadedFile.originalFilename;
 
+      // Extract the file extension
+      const fileExtension = path.extname(originalFileName);
       // Check if oldPath is defined and not empty
       if (!oldPath) {
         console.error('Old path is not defined');
         return res.status(500).json({ error: 'Old path is not defined' });
       }
 
-      const newPath = path.join(form.uploadDir, uploadedFile.originalFilename);
+      const newPath = path.join(form.uploadDir, `${customFileName}${fileExtension}`);
 
       console.log('Old Path:', oldPath);
       console.log('New Path:', newPath);

@@ -16,7 +16,7 @@ const MyNFTs = () => {
   const router = useRouter();
 
   useEffect(() => {
-    fetchMyNFTsOrCreatedNFTs()
+    fetchMyNFTsOrCreatedNFTs('fetchItemsListed')
       .then((items) => {
         setNfts(items);
         setNftsCopy(items);
@@ -78,7 +78,7 @@ const MyNFTs = () => {
 
         <div className="flexCenter flex-col -mt-20 z-0">
           <div className="flexCenter w-40 h-40 sm:w-36 sm:h-36 p-1 bg-nft-black-2 rounded-full">
-            <Image src={images.creator1} className="rounded-full object-cover" objectFit="cover" />
+            <Image src={`/profiles/${encodeURIComponent(currentAccount)}.png`} className="rounded-full object-cover" height={168} width={168} objectFit="cover" priority />
           </div>
           <p className="font-poppins dark:text-white text-nft-black-1 font-semibold text-2xl mt-6">{shortenAddress(currentAccount)}</p>
         </div>
@@ -87,7 +87,7 @@ const MyNFTs = () => {
       <Button
         btnName="Edit Profile"
         btnType="primary"
-        classStyles="relative -top-28 sm:left-40 left-48 sm:-top-24 rounded-xl"
+        classStyles="relative -top-28 xs:left-32 xs:-ml-4 sm:left-40 left-48 xs:-top-20 sm:-top-24 rounded-xl"
         handleClick={() => router.push('/editprofile')}
       />
 

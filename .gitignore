@@ -29,3 +29,4 @@ artifacts
 .vscode
 
 /profiles/*
+/public/profiles/*
