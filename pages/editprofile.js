@@ -12,6 +12,7 @@ const editMyprofile = () => {
 
   const [file, setFile] = useState(null);
   const [previewUrl, setPreviewUrl] = useState(null);
+  const [formInput, updateFormInput] = useState({ name: '', bio: '' });
   const router = useRouter();
 
   const handleFileChange = (e) => {
@@ -38,15 +39,20 @@ const editMyprofile = () => {
   };
 
   const handleSubmit = async () => {
-    if (!file) {
-      console.error('No file selected');
-      return;
-    }
+    // if (!file) {
+    //   console.error('No file selected');
+    //   return;
+    // }
 
     const formData = new FormData();
     formData.append('file', file);
     formData.append('user', currentAccount);
-
+    formData.append('name', formInput.name); // Add the name field to formData
+    formData.append('bio', formInput.bio); // Add the bio field to formData
+    // formData.append('walletid', currentAccount); // Add the bio field to formData
+    console.log('test');
+    console.log(formInput.name);
+    console.log(formInput.bio);
     try {
       const response = await fetch('api/upload', {
         method: 'POST',
@@ -112,6 +118,18 @@ const editMyprofile = () => {
 
                 {/* <button type="button" onClick={handleSubmit}>Upload Image</button> */}
               </div>
+              <Input
+                inputType="input"
+                title="Name"
+                placeholder="your username"
+                handleClick={(e) => updateFormInput({ ...formInput, name: e.target.value })}
+              />
+              <Input
+                inputType="input"
+                title="Bio"
+                placeholder="your bio"
+                handleClick={(e) => updateFormInput({ ...formInput, bio: e.target.value })}
+              />
             </div>
           </div>
 
