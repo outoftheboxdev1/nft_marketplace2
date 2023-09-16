@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import { useTheme } from 'next-themes';
 import Link from 'next/link';
+import React, { useState } from 'react';
 import images from '../assets';
 import Button from './Button';
 
@@ -24,6 +25,47 @@ const socialUrls = ['https://www.instagram.com/evertradedofficial', 'https://twi
 const Footer = () => {
   const { theme } = useTheme();
 
+  const [email, setEmail] = useState('');
+
+  const handleEmailChange = (e) => {
+    setEmail(e.target.value);
+  };
+
+  const handleSubscribeClick = () => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    // Check if the email is valid
+    if (!emailRegex.test(email)) {
+      console.error('Invalid email address');
+      alert('Invalid email address');
+      // You can display an error message to the user here if needed
+      return;
+    }
+    // Make the HTTP POST request to /subscribe with the email
+    fetch('/api/subscribe', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ email }),
+    })
+      .then((response) => {
+        if (response.status === 200) {
+          // Subscription was successful
+          console.log('Subscription successful');
+          alert('you are now subscribed');
+        } else if (response.status === 409) {
+          // Email is already subscribed (duplicate)
+          console.log('Email already subscribed');
+        } else {
+          // Handle other errors
+          console.error('Subscription failed');
+        }
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+      });
+  };
   return (
     <footer className="flexCenter flex-col border-t dark:border-nft-black-1 border-nft-gray-1 sm:py-8 py-16">
       <div className="w-full minmd:w-4/5 flex flex-row md:flex-col sm:px-4 px-16">
@@ -34,12 +76,13 @@ const Footer = () => {
           </div>
           <p className="font-poppins dark:text-white text-nft-black-1 font-semibold text-base mt-6">Get the latest updates</p>
           <div className="flexBetween md:w-full minlg:w-557 w-357 mt-6 dark:bg-nft-black-2 bg-white border dark:border-nft-black-2 border-nft-gray-2 rounded-md">
-            <input type="email" placeholder="Enter Your Email" className="h-full flex-1 w-full dark:bg-nft-black-2 bg-white px-4 rounded-md font-poppins dark:text-white text-nft-black-1 font-normal text-xs minlg:text-lg outline-none" />
+            <input type="email" placeholder="Enter Your Email" className="h-full flex-1 w-full dark:bg-nft-black-2 bg-white px-4 rounded-md font-poppins dark:text-white text-nft-black-1 font-normal text-xs minlg:text-lg outline-none" value={email} onChange={handleEmailChange} />
             <div className="flex-initial">
               <Button
                 btnName="Subscribe"
                 btnType="primary"
                 classStyles="rounded-md"
+                handleClick={handleSubscribeClick}
               />
             </div>
           </div>

@@ -8,6 +8,13 @@ import { getCreators } from '../utils/getTopCreators';
 import { shortenAddress } from '../utils/shortenAddress';
 import images from '../assets';
 
+// import app from './subscribe.js';
+
+// // ... (other configurations, middleware, etc.)
+
+// // Export the app instance
+// require('./subscribe')(app);
+
 const Home = () => {
   const { fetchNFTs } = useContext(NFTContext);
   const [nfts, setNfts] = useState([]);
