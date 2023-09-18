@@ -1,6 +1,7 @@
 import { useEffect, useState, useContext } from 'react';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
+import axios from 'axios'; // Import Axios for making AJAX requests
 
 import { NFTContext } from '../context/NFTContext';
 import { shortenAddress } from '../utils/shortenAddress';
@@ -13,8 +14,20 @@ const MyNFTs = () => {
   const [nftsCopy, setNftsCopy] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [activeSelect, setActiveSelect] = useState('Recently Added');
+  const [userData, setUserData] = useState(null);
   const router = useRouter();
-
+  const walletId = encodeURIComponent(currentAccount);
+  useEffect(() => {
+    // Make a GET request to the updated endpoint
+    axios.get(`/api/displayUserdata?walletId=${walletId}`)
+      .then((response) => {
+        const userData = response.data;
+        setUserData(userData);
+      })
+      .catch((error) => {
+        console.error('Error fetching user data:', error);
+      });
+  }, [walletId]);
   useEffect(() => {
     fetchMyNFTsOrCreatedNFTs('fetchItemsListed')
       .then((items) => {
@@ -80,16 +93,19 @@ const MyNFTs = () => {
           <div className="flexCenter w-40 h-40 sm:w-36 sm:h-36 p-1 bg-nft-black-2 rounded-full">
             <Image src={`/profiles/${encodeURIComponent(currentAccount)}.png`} className="rounded-full object-cover" height={168} width={168} objectFit="cover" priority />
           </div>
-          <p className="font-poppins dark:text-white text-nft-black-1 font-semibold text-2xl mt-6">{shortenAddress(currentAccount)}</p>
-        </div>
-      </div>
+          {/* Render username and bio */}
+          <p className="font-poppins dark:text-white text-nft-black-1 text-2xl font-semibold mt-2">{userData.username}</p>
+          <p className="font-poppins dark:text-white text-nft-black-1 text-lg mt-0">{shortenAddress(currentAccount)}</p>
+          <p className="font-poppins dark:text-white text-nft-black-1 text-sm mt-1 break-all pl-4 pr-4">{userData.bio}</p>
 
-      <Button
-        btnName="Edit Profile"
-        btnType="primary"
-        classStyles="relative -top-28 xs:left-32 xs:-ml-4 sm:left-40 left-48 xs:-top-20 sm:-top-24 rounded-xl"
-        handleClick={() => router.push('/editprofile')}
-      />
+        </div>
+        <Button
+          btnName="Edit Profile"
+          btnType="secondary"
+          classStyles="relative left-0 top-5 rounded-xl"
+          handleClick={() => router.push('/editprofile')}
+        />
+      </div>
 
       {(!isLoading && nfts.length === 0) ? (
         <div className="flexCenter sm:p-4 p-16">

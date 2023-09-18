@@ -105,7 +105,7 @@ const editMyprofile = () => {
                           onClick={() => document.querySelector('input[type=file]').click()}
                         />
                       </label>
-                      <p className="font-poppins dark:text-white text-nft-black-1 font-semibold text-xs mt-7">Image format supported .png. Max 100mb.</p>
+                      <span className="font-poppins dark:text-white text-nft-black-1 font-semibold text-xs mt-7">Image format supported .png. Max 100mb.</span>
                     </p>
                   )}
                 </div>
