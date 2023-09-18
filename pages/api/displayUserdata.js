@@ -1,9 +1,7 @@
 const express = require('express');
-const mysql = require('mysql'); // You'll need the MySQL library for Node.js
+const mysql = require('mysql');
 
-const app = express();
-
-// Configure MySQL connection
+const router = express.Router();
 const db = mysql.createConnection({
   host: '185.212.71.102',
   user: 'u603642692_users',
@@ -19,14 +17,13 @@ db.connect((err) => {
   console.log('Connected to MySQL');
 });
 
-// Create a route to fetch user data
-app.get('/api/displayUserdata', (req, res) => {
-  const query = 'SELECT username, bio FROM users WHERE walletId = ?'; // Adjust the query as needed
+// Define your API routes
 
-  // You'll need to extract the walletId from the request, e.g., req.query.walletId or req.params.walletId
+// Route to fetch user data by walletId
+router.get('/api/displayUserdata', (req, res) => {
+  const query = 'SELECT username, bio FROM users WHERE walletId = ?';
   const userId = req.query.walletId;
 
-  // Execute the query
   db.query(query, [userId], (err, results) => {
     if (err) {
       return res.status(500).json({ error: 'Error fetching user data' });
@@ -41,9 +38,5 @@ app.get('/api/displayUserdata', (req, res) => {
   });
 });
 
-// Start the server
-const port = process.env.PORT || 3007;
-app.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
-});
-module.exports = app;
+// Export the router to be used in your main server file
+module.exports = router;

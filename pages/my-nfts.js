@@ -94,9 +94,15 @@ const MyNFTs = () => {
             <Image src={`/profiles/${encodeURIComponent(currentAccount)}.png`} className="rounded-full object-cover" height={168} width={168} objectFit="cover" priority />
           </div>
           {/* Render username and bio */}
-          <p className="font-poppins dark:text-white text-nft-black-1 text-2xl font-semibold mt-2">{userData.username}</p>
-          <p className="font-poppins dark:text-white text-nft-black-1 text-lg mt-0">{shortenAddress(currentAccount)}</p>
-          <p className="font-poppins dark:text-white text-nft-black-1 text-sm mt-1 break-all pl-4 pr-4">{userData.bio}</p>
+          {userData ? ( // Conditional rendering for user data
+            <>
+              <p className="font-poppins dark:text-white text-nft-black-1 text-2xl font-semibold mt-2">{userData.username}</p>
+              <p className="font-poppins dark:text-white text-nft-black-1 text-lg mt-0">{shortenAddress(currentAccount)}</p>
+              <p className="font-poppins dark:text-white text-nft-black-1 text-sm mt-1 break-all pl-4 pr-4">{userData.bio}</p>
+            </>
+          ) : (
+            <p>Loading user data...</p> // You can add a loading indicator here
+          )}
 
         </div>
         <Button
