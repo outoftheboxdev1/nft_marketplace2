@@ -5,10 +5,10 @@ const router = express.Router(); // Use an Express Router for your routes
 
 // Create a MySQL database connection
 const db = mysql.createConnection({
-  host: '185.212.71.102',
-  user: 'u603642692_ggarey',
-  password: '1tH/d6*:cUBA',
-  database: 'u603642692_subscriptions',
+  host: process.env.NEXT_PUBLIC_DBHOST,
+  user: process.env.NEXT_PUBLIC_SUBDBUSER,
+  password: process.env.NEXT_PUBLIC_SUBDBPASS,
+  database: process.env.NEXT_PUBLIC_SUBDBNAME,
 });
 
 // Connect to the database

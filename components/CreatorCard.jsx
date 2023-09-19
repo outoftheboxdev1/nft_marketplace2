@@ -1,13 +1,28 @@
 import { useContext, useState, useEffect } from 'react';
 import Image from 'next/image';
 
+import axios from 'axios'; // Import Axios for making AJAX requests
 import images from '../assets';
 import { NFTContext } from '../context/NFTContext';
+import { shortenAddress } from '../utils/shortenAddress';
+import { shortenUsername } from '../utils/shortenUsername';
 
 const CreatorCard = ({ rank, creatorImage, creatorName, creatorEths }) => {
   const { nftCurrency } = useContext(NFTContext);
+  const [userData, setUserData] = useState(null);
   const [imageExists, setImageExists] = useState(true); // Assume the image exists initially
-
+  const walletId = encodeURIComponent(creatorName);
+  useEffect(() => {
+    // Make a GET request to the updated endpoint
+    axios.get(`/api/displayUserdata?walletId=${walletId}`)
+      .then((response) => {
+        const userData = response.data;
+        setUserData(userData);
+      })
+      .catch((error) => {
+        console.error('Error fetching user data:', error);
+      });
+  }, [walletId]);
   useEffect(() => {
     const checkImage = async () => {
       try {
@@ -58,7 +73,17 @@ const CreatorCard = ({ rank, creatorImage, creatorName, creatorEths }) => {
       </div>
 
       <div className="mt-3 minlg:mt-7 text-center flexCenter flex-col">
-        <p className="font-poppins dark:text-white text-nft-black-1 font-semibold text-base">{creatorName}</p>
+        {userData ? ( // Conditional rendering for user data
+          <>
+            <p className="font-poppins dark:text-white text-nft-black-1 font-semibold text-base">{shortenUsername(userData.username, 16)}</p>
+            <p className="font-poppins dark:text-white text-nft-black-1 font-normal text-sm">({shortenAddress(creatorName)})</p>
+          </>
+        ) : (
+          <>
+            <p className="font-poppins dark:text-white text-nft-black-1 font-semibold text-base">Anonymous</p>
+            <p className="font-poppins dark:text-white text-nft-black-1 font-normal text-sm">{shortenAddress(creatorName)}</p>
+          </>
+        )}
         <p className="mt-1 font-poppins dark:text-white text-nft-black-1 font-semibold text-base">{creatorEths.toFixed(2)} <span className="font-normal">{nftCurrency}</span></p>
       </div>
     </div>

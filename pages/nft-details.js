@@ -1,10 +1,12 @@
 import { useState, useEffect, useContext } from 'react';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
+import axios from 'axios';
 import { NFTContext } from '../context/NFTContext';
 import { shortenAddress } from '../utils/shortenAddress';
 import { Button, Loader, Modal } from '../components';
 import images from '../assets';
+import { shortenUsername } from '../utils/shortenUsername';
 
 const PaymentBodyCmp = ({ nft, nftCurrency }) => (
   <div className="flex flex-col">
@@ -45,6 +47,20 @@ const AssetDetails = () => {
   const router = useRouter();
   const { seller } = router.query;
   const creatorImage = `/profiles/${encodeURIComponent(seller)}.png`;
+  const [userData, setUserData] = useState(null);
+
+  const walletId = encodeURIComponent(nft.seller);
+  useEffect(() => {
+    // Make a GET request to the updated endpoint
+    axios.get(`/api/displayUserdata?walletId=${walletId}`)
+      .then((response) => {
+        const userData = response.data;
+        setUserData(userData);
+      })
+      .catch((error) => {
+        console.error('Error fetching user data:', error);
+      });
+  }, [walletId]);
 
   useEffect(() => {
     // disable body scroll when navbar is open
@@ -110,7 +126,18 @@ const AssetDetails = () => {
                 <Image src={images.creator1} key={nft.seller} loading="eager" objectFit="cover" className="rounded-full" />
               )}
             </div>
-            <p className="font-poppins dark:text-white text-nft-black-1 text-sm minlg:text-lg font-semibold">{shortenAddress(nft.seller)}</p>
+            {/* <p className="font-poppins dark:text-white text-nft-black-1 text-sm minlg:text-lg font-semibold">{shortenAddress(nft.seller)}</p> */}
+            {userData ? ( // Conditional rendering for user data
+              <>
+                <p className="font-poppins dark:text-white text-nft-black-1 font-semibold text-base mr-1">{shortenUsername(userData.username, 16)}</p>
+                <p className="font-poppins dark:text-white text-nft-black-1 font-normal text-sm">({shortenAddress(nft.seller)})</p>
+              </>
+            ) : (
+              <>
+                <p className="font-poppins dark:text-white text-nft-black-1 font-semibold text-base mr-1">Anonymous</p>
+                <p className="font-poppins dark:text-white text-nft-black-1 font-normal text-sm">({shortenAddress(nft.seller)})</p>
+              </>
+            )}
           </div>
         </div>
 

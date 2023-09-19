@@ -3,10 +3,10 @@ const mysql = require('mysql');
 
 const router = express.Router();
 const db = mysql.createConnection({
-  host: '185.212.71.102',
-  user: 'u603642692_users',
-  password: '1w=TXr>R@[P',
-  database: 'u603642692_user_profiles',
+  host: process.env.NEXT_PUBLIC_DBHOST,
+  user: process.env.NEXT_PUBLIC_USERDBUSER,
+  password: process.env.NEXT_PUBLIC_USERDBPASS,
+  database: process.env.NEXT_PUBLIC_USERDBNAME,
 });
 
 // Connect to MySQL

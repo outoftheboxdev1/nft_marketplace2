@@ -128,7 +128,7 @@ const Home = () => {
                       key={creator.seller}
                       rank={i + 1}
                       creatorImage={`/profiles/${creator.seller}.png`}
-                      creatorName={shortenAddress(creator.seller)}
+                      creatorName={creator.seller}
                       creatorEths={creator.sumall}
                     />
                   ))}

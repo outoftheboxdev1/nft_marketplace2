@@ -88,7 +88,7 @@ const Footer = () => {
         </div>
 
         <div className="flex-1 flexBetweenStart flex-wrap ml-10 md:ml-0 md:mt-8">
-          <FooterLinks heading="EverTraded" items={['Explore', 'How it Works', 'Contact Us']} urls={['/', '/how-it-works', '/']} />
+          <FooterLinks heading="EverTraded" items={['Explore', 'How it Works', 'Contact Us']} urls={['/', '/how-it-works', 'mailto:info@evertraded.com']} />
           <FooterLinks heading="Support" items={['Help Center', 'Terms of service', 'Legal', 'Privacy policy']} urls={['/', '/tos', '/', '/privacy-policy']} extraClasses="ml-4" />
         </div>
       </div>

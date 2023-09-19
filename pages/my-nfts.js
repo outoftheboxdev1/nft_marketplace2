@@ -6,7 +6,6 @@ import axios from 'axios'; // Import Axios for making AJAX requests
 import { NFTContext } from '../context/NFTContext';
 import { shortenAddress } from '../utils/shortenAddress';
 import { Loader, NFTCard, SearchBar, Banner, Button } from '../components';
-import images from '../assets';
 
 const MyNFTs = () => {
   const { fetchMyNFTsOrCreatedNFTs, currentAccount } = useContext(NFTContext);
@@ -101,7 +100,10 @@ const MyNFTs = () => {
               <p className="font-poppins dark:text-white text-nft-black-1 text-sm mt-1 break-all pl-4 pr-4">{userData.bio}</p>
             </>
           ) : (
-            <p>Loading user data...</p> // You can add a loading indicator here
+            <>
+              <p className="font-poppins dark:text-white text-nft-black-1 text-lg mt-0">{shortenAddress(currentAccount)}</p>
+              <p>Loading user data...</p>
+            </>
           )}
 
         </div>
