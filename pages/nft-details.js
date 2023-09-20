@@ -126,7 +126,7 @@ const AssetDetails = () => {
                 <Image src={images.creator1} key={nft.seller} loading="eager" objectFit="cover" className="rounded-full" />
               )}
               {userData && userData.verified !== '0' ? (
-                <div className="absolute w-4 h-4 minlg:w-7 minlg:h-7 bottom-1 -right-1">
+                <div className="absolute w-4 h-4 minlg:w-6 minlg:h-6 bottom-1 -right-1 minlg:right-2 minlg:bottom-3 ">
                   <Image src={images.tick} layout="fill" objectFit="contain" alt="tick" />
                 </div>
               ) : null}
