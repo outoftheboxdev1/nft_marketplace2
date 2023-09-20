@@ -125,6 +125,11 @@ const AssetDetails = () => {
               ) : (
                 <Image src={images.creator1} key={nft.seller} loading="eager" objectFit="cover" className="rounded-full" />
               )}
+              {userData && userData.verified !== '0' ? (
+                <div className="absolute w-4 h-4 minlg:w-7 minlg:h-7 bottom-1 -right-1">
+                  <Image src={images.tick} layout="fill" objectFit="contain" alt="tick" />
+                </div>
+              ) : null}
             </div>
             {/* <p className="font-poppins dark:text-white text-nft-black-1 text-sm minlg:text-lg font-semibold">{shortenAddress(nft.seller)}</p> */}
             {userData ? ( // Conditional rendering for user data

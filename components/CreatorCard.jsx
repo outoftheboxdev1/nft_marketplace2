@@ -61,11 +61,11 @@ const CreatorCard = ({ rank, creatorImage, creatorName, creatorEths }) => {
               className="rounded-full"
             />
           )}
-          {/* {userData && userData.verified ? ( */}
-          <div className="absolute w-4 h-4 minlg:w-7 minlg:h-7 bottom-2 -right-0">
-            <Image src={images.tick} layout="fill" objectFit="contain" alt="tick" />
-          </div>
-          {/* ) : null} */}
+          {userData && userData.verified !== '0' ? (
+            <div className="absolute w-5 h-5 minlg:w-7 minlg:h-7 bottom-1 -right-0">
+              <Image src={images.tick} layout="fill" objectFit="contain" alt="tick" />
+            </div>
+          ) : null}
 
         </div>
       </div>
@@ -80,7 +80,7 @@ const CreatorCard = ({ rank, creatorImage, creatorName, creatorEths }) => {
         ) : (
           <>
             <p className="font-poppins dark:text-white text-nft-black-1 font-semibold text-base">Anonymous</p>
-            <p className="font-poppins dark:text-white text-nft-black-1 font-normal text-sm">{shortenAddress(creatorName)}</p>
+            <p className="font-poppins dark:text-white text-nft-black-1 font-normal text-sm">({shortenAddress(creatorName)})</p>
           </>
         )}
         <p className="mt-1 font-poppins dark:text-white text-nft-black-1 font-semibold text-base">{creatorEths.toFixed(2)} <span className="font-normal">{nftCurrency}</span></p>
