@@ -2,7 +2,7 @@ import { useContext } from 'react';
 
 import { NFTContext } from '../context/NFTContext';
 
-const Input = ({ inputType, title, placeholder, handleClick }) => {
+const Input = ({ inputType, title, placeholder, handleClick, value = '' }) => {
   const { nftCurrency } = useContext(NFTContext);
 
   return (
@@ -14,6 +14,7 @@ const Input = ({ inputType, title, placeholder, handleClick }) => {
           <input
             type="number"
             className="flex-1 w-full dark:bg-nft-black-1 bg-white outline-none "
+            value={value}
             placeholder={placeholder}
             onChange={handleClick}
           />
@@ -21,12 +22,13 @@ const Input = ({ inputType, title, placeholder, handleClick }) => {
         </div>
       )
         : inputType === 'textarea' ? (
-          <textarea rows={10} className="dark:bg-nft-black-1 bg-white border dark:border-nft-black-1 border-nft-gray-2 rounded-lg w-full outline-none font-poppins dark:text-white text-nft-gray-2 text-base mt-4 px-4 py-3" placeholder={placeholder} onChange={handleClick} />
+          <textarea rows={10} className="dark:bg-nft-black-1 bg-white border dark:border-nft-black-1 border-nft-gray-2 rounded-lg w-full outline-none font-poppins dark:text-white text-nft-gray-2 text-base mt-4 px-4 py-3" placeholder={placeholder} onChange={handleClick} value={value} />
         )
           : (
             <input
               className="dark:bg-nft-black-1 bg-white border dark:border-nft-black-1 border-nft-gray-2 rounded-lg w-full outline-none font-poppins dark:text-white text-nft-gray-2 text-base mt-4 px-4 py-3"
               placeholder={placeholder}
+              value={value}
               onChange={handleClick}
             />
           )}

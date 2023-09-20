@@ -117,7 +117,7 @@ const MyNFTs = () => {
           btnName="Edit Profile"
           btnType="secondary"
           classStyles="relative left-0 top-5 rounded-xl"
-          handleClick={() => router.push('/editprofile')}
+          handleClick={() => router.push(`/editprofile?userid=${currentAccount}`)}
         />
       </div>
 

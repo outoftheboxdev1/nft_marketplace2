@@ -1,9 +1,9 @@
-import { useState, useMemo, useCallback, useContext } from 'react';
+import { useState, useMemo, useCallback, useContext, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { useDropzone } from 'react-dropzone';
 import Image from 'next/image';
 import { useTheme } from 'next-themes';
-
+import axios from 'axios';
 import { NFTContext } from '../context/NFTContext';
 import { Button, Input, Loader } from '../components';
 
@@ -14,6 +14,39 @@ const editMyprofile = () => {
   const [previewUrl, setPreviewUrl] = useState(null);
   const [formInput, updateFormInput] = useState({ name: '', bio: '' });
   const router = useRouter();
+  console.log(router);
+  const [currentAccount1, setCurrentAccount] = useState(undefined);
+
+  useEffect(() => {
+    // When router.query.userid changes, update currentAccount1
+    setCurrentAccount(router.query.userid);
+  }, [router.query.userid]);
+
+  // console.log('currentAccount1:', currentAccount1);
+
+  // Function to fetch user profile data
+  useEffect(() => {
+    // Check if currentAccount1 is defined before making the fetch request
+    if (currentAccount1 !== undefined) {
+      // Make the fetch request using currentAccount1
+      const fetchData = async () => {
+        try {
+          const response = await axios.get(`/api/displayUserdata?walletId=${currentAccount1}`);
+          if (response.status === 200) {
+            const { data } = response;
+            updateFormInput({ name: data.username, bio: data.bio });
+            console.log('User data:', data);
+          } else {
+            console.error('Error fetching user profile data');
+          }
+        } catch (error) {
+          console.error('Error fetching user profile data:', error);
+        }
+      };
+
+      fetchData(); // Call the fetch data function when currentAccount1 is defined
+    }
+  }, [currentAccount1]); // Add currentAccount1 as a dependency
 
   const handleFileChange = (e) => {
     const selectedFile = e.target.files[0];
@@ -50,9 +83,9 @@ const editMyprofile = () => {
     formData.append('name', formInput.name); // Add the name field to formData
     formData.append('bio', formInput.bio); // Add the bio field to formData
     // formData.append('walletid', currentAccount); // Add the bio field to formData
-    console.log('test');
-    console.log(formInput.name);
-    console.log(formInput.bio);
+    // console.log('test');
+    // console.log(formInput.name);
+    // console.log(formInput.bio);
     try {
       const response = await fetch('api/upload', {
         method: 'POST',
@@ -122,12 +155,14 @@ const editMyprofile = () => {
                 inputType="input"
                 title="Name"
                 placeholder="your username"
+                value={formInput.name}
                 handleClick={(e) => updateFormInput({ ...formInput, name: e.target.value })}
               />
               <Input
                 inputType="input"
                 title="Bio"
                 placeholder="your bio"
+                value={formInput.bio}
                 handleClick={(e) => updateFormInput({ ...formInput, bio: e.target.value })}
               />
             </div>
