@@ -61,18 +61,17 @@ const CreatorCard = ({ rank, creatorImage, creatorName, creatorEths }) => {
               className="rounded-full"
             />
           )}
+          {/* {userData && userData.verified ? ( */}
           <div className="absolute w-4 h-4 minlg:w-7 minlg:h-7 bottom-2 -right-0">
-            <Image
-              src={images.tick}
-              layout="fill"
-              objectFit="contain"
-              alt="tick"
-            />
+            <Image src={images.tick} layout="fill" objectFit="contain" alt="tick" />
           </div>
+          {/* ) : null} */}
+
         </div>
       </div>
 
       <div className="mt-3 minlg:mt-7 text-center flexCenter flex-col">
+
         {userData ? ( // Conditional rendering for user data
           <>
             <p className="font-poppins dark:text-white text-nft-black-1 font-semibold text-base">{shortenUsername(userData.username, 16)}</p>
