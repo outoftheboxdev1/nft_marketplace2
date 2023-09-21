@@ -53,12 +53,15 @@ const Footer = () => {
         if (response.status === 200) {
           // Subscription was successful
           console.log('Subscription successful');
+          alert('Subscription Added');
         } else if (response.status === 409) {
           // Email is already subscribed (duplicate)
           console.log('Email already subscribed');
+          alert('Email Already Registered');
         } else {
           // Handle other errors
           console.error('Subscription failed');
+          alert('Email Already Registered');
         }
       })
       .catch((error) => {
