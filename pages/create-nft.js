@@ -4,6 +4,7 @@ import { useRouter } from 'next/router';
 import { useDropzone } from 'react-dropzone';
 import Image from 'next/image';
 import { useTheme } from 'next-themes';
+import axios from 'axios';
 
 import { NFTContext } from '../context/NFTContext';
 import { Button, Input, Loader } from '../components';
@@ -36,6 +37,7 @@ const CreateItem = () => {
       return URL;
     } catch (error) {
       console.log('Error uploading file to IPFS.');
+      alert('Error uploading file.');
     }
   };
 
@@ -61,20 +63,47 @@ const CreateItem = () => {
 
   const [formInput, updateFormInput] = useState({ price: '', name: '', description: '' });
   const router = useRouter();
+  const { currentAccount } = useContext(NFTContext);
 
   const createMarket = async () => {
     const { name, description, price } = formInput;
+    const formData = new FormData();
+    formData.append('price', formInput.price);
+    formData.append('name', formInput.name); // Add the name field to formData
+    formData.append('description', formInput.description); // Add the bio field to formData
     if (!name || !description || !price || !fileUrl) return;
     /* first, upload to IPFS */
     const data = JSON.stringify({ name, description, image: fileUrl });
+    formData.append('user', currentAccount);
     try {
       const added = await client.add(data);
+      formData.append('path', added.path);
       const url = `https://ever-traded.infura-ipfs.io/ipfs/${added.path}`;
+      formData.append('url', url);
       /* after file is uploaded to IPFS, pass the URL to save it on Polygon */
       await createSale(url, formInput.price);
-      router.push('/');
     } catch (error) {
       console.log('Error uploading file: ', error);
+      alert('Error uploading file.');
+    }
+    try {
+      const response = await fetch('api/uploadNFT', {
+        method: 'POST',
+        body: formData,
+      });
+
+      if (response.ok) {
+        console.log('Successfully Uploaded to Database');
+      // Handle success
+      } else {
+        console.error('Database Record Not Added');
+        console.log(response.error);
+      // Handle error
+      }
+      router.push('/');
+    } catch (error) {
+      console.error('Error uploading database info:', error);
+    // Handle error
     }
   };
 
