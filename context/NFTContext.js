@@ -75,17 +75,30 @@ export const NFTProvider = ({ children }) => {
     await transaction.wait();
   };
   const buyNft = async (nft) => {
-    const web3Modal = new Web3Modal();
-    const connection = await web3Modal.connect();
-    const provider = new ethers.providers.Web3Provider(connection);
-    const signer = provider.getSigner();
-    const contract = new ethers.Contract(MarketAddress, MarketAddressABI, signer);
+    try {
+      const web3Modal = new Web3Modal();
+      const connection = await web3Modal.connect();
+      const provider = new ethers.providers.Web3Provider(connection);
+      const signer = provider.getSigner();
+      const contract = new ethers.Contract(MarketAddress, MarketAddressABI, signer);
 
-    const price = ethers.utils.parseUnits(nft.price.toString(), 'ether');
-    const transaction = await contract.createMarketSale(nft.tokenId, { value: price });
-    setIsLoadingNFT(true);
-    await transaction.wait();
-    setIsLoadingNFT(false);
+      const price = ethers.utils.parseUnits(nft.price.toString(), 'ether');
+      const transaction = await contract.createMarketSale(nft.tokenId, { value: price });
+      setIsLoadingNFT(true);
+      await transaction.wait();
+      setIsLoadingNFT(false);
+    } catch (error) {
+      if (error.message.includes('insufficient funds for gas')) {
+        // Handle insufficient funds error here
+        alert('Insufficient funds. Please make sure you have enough ETH.');
+      }
+      // Handle other errors
+      console.error('Error:', error);
+      // You can display a different error message or handle it as needed
+      return false;
+    } finally {
+      setIsLoadingNFT(false);
+    }
   };
 
   const connectWallet = async () => {

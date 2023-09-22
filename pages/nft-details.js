@@ -95,10 +95,12 @@ const AssetDetails = () => {
   }, [creatorImage]);
 
   const checkout = async () => {
-    await buyNft(nft);
+    const success = await buyNft(nft);
 
     setPaymentModal(false);
-    setSuccessModal(true);
+    if (success) {
+      setSuccessModal(true);
+    }
   };
 
   if (isLoading) return <Loader />;
