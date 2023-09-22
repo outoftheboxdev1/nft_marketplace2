@@ -29,7 +29,7 @@ const MyNFTs = () => {
       });
   }, [walletId]);
   useEffect(() => {
-    fetchMyNFTsOrCreatedNFTs('fetchItemsListed')
+    fetchMyNFTsOrCreatedNFTs('')
       .then((items) => {
         setNfts(items);
         setNftsCopy(items);

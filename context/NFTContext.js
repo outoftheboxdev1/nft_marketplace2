@@ -22,6 +22,8 @@ export const NFTProvider = ({ children }) => {
 
     const data = await contract.fetchMarketItems();
 
+    console.log(data);
+
     const items = await Promise.all(data.map(async ({ tokenId, seller, owner, price: unformattedPrice }) => {
       const tokenURI = await contract.tokenURI(tokenId);
       const { data: { image, name, description } } = await axios.get(tokenURI);
