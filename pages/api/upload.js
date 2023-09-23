@@ -92,6 +92,7 @@ export default async function handler(req, res) {
           });
         }
       });
+
       if (err) {
         console.error('Error parsing form:', err);
         return res.status(500).json({ error: 'An error occurred while parsing the form' });

@@ -106,10 +106,7 @@ const MyNFTs = () => {
               <p className="font-poppins dark:text-white text-nft-black-1 text-sm mt-1 break-all pl-4 pr-4">{userData.bio}</p>
             </>
           ) : (
-            <>
-              <p className="font-poppins dark:text-white text-nft-black-1 text-lg mt-0">{shortenAddress(currentAccount)}</p>
-              <p>Loading user data...</p>
-            </>
+            <p className="font-poppins dark:text-white text-nft-black-1 text-lg mt-0">{shortenAddress(currentAccount)}</p>
           )}
 
         </div>

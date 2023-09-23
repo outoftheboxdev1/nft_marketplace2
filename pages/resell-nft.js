@@ -6,7 +6,7 @@ import { NFTContext } from '../context/NFTContext';
 import { Button, Input, Loader } from '../components';
 
 const ResellNFT = () => {
-  const { createSale, isLoadingNFT } = useContext(NFTContext);
+  const { createSale, isLoadingNFT, currentAccount } = useContext(NFTContext);
   const [price, setPrice] = useState('');
   const [image, setImage] = useState('');
   const router = useRouter();
@@ -27,7 +27,29 @@ const ResellNFT = () => {
 
   const resell = async () => {
     await createSale(tokenURI, price, true, id);
+    try {
+      const formData = new FormData();
+      formData.append('price', price);
+      formData.append('user', currentAccount);
+      formData.append('path', tokenURI);
+      const response = await fetch('api/uploadNFT', {
+        method: 'POST',
+        body: formData,
+      });
 
+      if (response.ok) {
+        console.log('Successfully Uploaded to Database');
+      // Handle success
+      } else {
+        console.error('Database Record Not Added');
+        console.log(response.error);
+      // Handle error
+      }
+      router.push('/');
+    } catch (error) {
+      console.error('Error uploading database info:', error);
+    // Handle error
+    }
     router.push('/');
   };
 

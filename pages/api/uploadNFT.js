@@ -84,16 +84,21 @@ export default async function handler(req, res) {
           // Insert the email into the MySQL database
           const nftUrl = `https://ever-traded.infura-ipfs.io/ipfs/${nftPath}`;
           const insertSql = 'INSERT INTO nfts (path, price, url, seller, name, description, category) VALUES (?, ?, ?, ?, ?, ?, ?)';
-          db.query(insertSql, [nftPath, price, nftUrl, walletid, name, description, category], (insertErr, result) => {
-            if (insertErr) {
-              console.error('MySQL query error:', insertErr);
-              return res.status(500).json({ message: 'Internal Server Error' });
-            }
-            console.log('Data inserted into MySQL database');
-            return res.status(200).json({ message: 'Data inserted successfully' });
-          });
+          if (name) {
+            db.query(insertSql, [nftPath, price, nftUrl, walletid, name, description, category], (insertErr, result) => {
+              if (insertErr) {
+                console.error('MySQL query error:', insertErr);
+                return res.status(500).json({ message: 'Internal Server Error' });
+              }
+              console.log('Data inserted into MySQL database');
+              return res.status(200).json({ message: 'Data inserted successfully' });
+            });
+          }
+          console.log(nftPath);
+          const nftPath1 = nftPath.toString().replace('https://ever-traded.infura-ipfs.io/ipfs/', '');
+
           const insertSql1 = 'INSERT INTO nftprices (path, price, seller) VALUES (?, ?, ?)';
-          db.query(insertSql1, [nftPath, price, walletid], (insertErr1, result) => {
+          db.query(insertSql1, [nftPath1, price, walletid], (insertErr1, result) => {
             if (insertErr1) {
               console.error('MySQL query error:', insertErr1);
               return res.status(500).json({ message: 'Internal Server Error' });
