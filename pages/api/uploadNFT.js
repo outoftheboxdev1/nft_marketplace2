@@ -50,6 +50,7 @@ export default async function handler(req, res) {
       const walletid = fields.user;
       const { name } = fields;
       const { description } = fields;
+      const { category } = fields;
 
       // Check if the MySQL connection is established
       if (db.state !== 'authenticated') {
@@ -82,8 +83,8 @@ export default async function handler(req, res) {
         } else {
           // Insert the email into the MySQL database
           const nftUrl = `https://ever-traded.infura-ipfs.io/ipfs/${nftPath}`;
-          const insertSql = 'INSERT INTO nfts (path, price, url, seller, name, description) VALUES (?, ?, ?, ?, ?, ?)';
-          db.query(insertSql, [nftPath, price, nftUrl, walletid, name, description], (insertErr, result) => {
+          const insertSql = 'INSERT INTO nfts (path, price, url, seller, name, description, category) VALUES (?, ?, ?, ?, ?, ?, ?)';
+          db.query(insertSql, [nftPath, price, nftUrl, walletid, name, description, category], (insertErr, result) => {
             if (insertErr) {
               console.error('MySQL query error:', insertErr);
               return res.status(500).json({ message: 'Internal Server Error' });

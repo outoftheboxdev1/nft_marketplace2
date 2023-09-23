@@ -61,7 +61,7 @@ const CreateItem = () => {
     [isDragActive, isDragReject, isDragAccept],
   );
 
-  const [formInput, updateFormInput] = useState({ price: '', name: '', description: '' });
+  const [formInput, updateFormInput] = useState({ price: '', name: '', description: '', category: '' });
   const router = useRouter();
   const { currentAccount } = useContext(NFTContext);
 
@@ -71,6 +71,7 @@ const CreateItem = () => {
     formData.append('price', formInput.price);
     formData.append('name', formInput.name); // Add the name field to formData
     formData.append('description', formInput.description); // Add the bio field to formData
+    formData.append('category', formInput.category);
     if (!name || !description || !price || !fileUrl) return;
     /* first, upload to IPFS */
     const data = JSON.stringify({ name, description, image: fileUrl });
@@ -161,6 +162,12 @@ const CreateItem = () => {
           title="Name"
           placeholder="NFT Name"
           handleClick={(e) => updateFormInput({ ...formInput, name: e.target.value })}
+        />
+
+        <Input
+          inputType="select"
+          title="Category"
+          handleClick={(e) => updateFormInput({ ...formInput, category: e.target.value })}
         />
 
         <Input
