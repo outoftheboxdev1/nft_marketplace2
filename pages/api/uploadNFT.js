@@ -92,6 +92,15 @@ export default async function handler(req, res) {
             console.log('Data inserted into MySQL database');
             return res.status(200).json({ message: 'Data inserted successfully' });
           });
+          const insertSql1 = 'INSERT INTO nftprices (path, price, seller) VALUES (?, ?, ?)';
+          db.query(insertSql1, [nftPath, price, walletid], (insertErr1, result) => {
+            if (insertErr1) {
+              console.error('MySQL query error:', insertErr1);
+              return res.status(500).json({ message: 'Internal Server Error' });
+            }
+            console.log('Data inserted into MySQL database');
+            return res.status(200).json({ message: 'Data inserted successfully' });
+          });
         }
       });
       if (err) {
