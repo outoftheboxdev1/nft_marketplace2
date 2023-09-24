@@ -43,7 +43,19 @@ export default async function handler(req, res) {
   }
 
   const form = new formidable.IncomingForm();
-  mkdir('/public/profiles');
+  const directoryPath = '/public/profiles';
+
+  fs.mkdir(directoryPath, (err) => {
+    if (err) {
+    // Handle the error
+      console.error('Error creating directory:', err);
+    // Respond with an error message or appropriate status code
+    } else {
+    // Directory creation was successful
+      console.log('Directory created successfully');
+    // Continue with the rest of your logic
+    }
+  });
   form.uploadDir = '/public/profiles'; // Set the upload directory
 
   try {
