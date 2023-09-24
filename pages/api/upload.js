@@ -42,7 +42,14 @@ export default async function handler(req, res) {
   }
 
   const form = new formidable.IncomingForm();
-  form.uploadDir = 'https://evertraded.com/profiles';
+  form.uploadDir = path.join(process.cwd(), 'public', 'profiles');
+
+  try {
+    await fs.mkdir(form.uploadDir, { recursive: true });
+  } catch (mkdirErr) {
+    console.error('Error creating directory:', mkdirErr);
+    return res.status(500).json({ error: 'An error occurred while creating the directory' });
+  }
 
   try {
     form.parse(req, async (err, fields, files) => {
