@@ -42,7 +42,7 @@ export default async function handler(req, res) {
   }
 
   const form = new formidable.IncomingForm();
-  form.uploadDir = path.join(process.cwd(), 'public/profiles'); // Set the upload directory
+  form.uploadDir = '../../public/profiles'; // Set the upload directory
 
   try {
     form.parse(req, async (err, fields, files) => {
