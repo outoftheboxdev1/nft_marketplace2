@@ -45,17 +45,16 @@ export default async function handler(req, res) {
   const form = new formidable.IncomingForm();
   const directoryPath = '/public/profiles';
 
-  fs.mkdir(directoryPath, (err) => {
-    if (err) {
-    // Handle the error
-      console.error('Error creating directory:', err);
-    // Respond with an error message or appropriate status code
-    } else {
-    // Directory creation was successful
+  // Use the `fs.promises.mkdir` method to create the directory
+  fs.promises.mkdir(directoryPath, { recursive: true })
+    .then(() => {
       console.log('Directory created successfully');
-    // Continue with the rest of your logic
-    }
-  });
+    // Continue with your logic here
+    })
+    .catch((err) => {
+      console.error('Error creating directory:', err);
+    // Handle the error or respond with an appropriate message
+    });
   form.uploadDir = '/public/profiles'; // Set the upload directory
 
   try {
