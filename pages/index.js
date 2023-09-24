@@ -5,7 +5,6 @@ import Image from 'next/image';
 import { CreatorCard, NFTCard, Loader, SearchBar, Banner } from '../components';
 import { NFTContext } from '../context/NFTContext';
 import { getCreators } from '../utils/getTopCreators';
-import { shortenAddress } from '../utils/shortenAddress';
 import images from '../assets';
 
 // import app from './subscribe.js';

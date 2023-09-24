@@ -1,4 +1,3 @@
-const fs = require('fs');
 require('@nomiclabs/hardhat-waffle');
 
 // hardhat.config.js

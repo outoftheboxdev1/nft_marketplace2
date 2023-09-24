@@ -1,3 +1,4 @@
+/* eslint-disable no-shadow */
 import { useContext, useState, useEffect } from 'react';
 import Image from 'next/image';
 

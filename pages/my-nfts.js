@@ -21,6 +21,7 @@ const MyNFTs = () => {
     // Make a GET request to the updated endpoint
     axios.get(`/api/displayUserdata?walletId=${walletId}`)
       .then((response) => {
+        // eslint-disable-next-line no-shadow
         const userData = response.data;
         setUserData(userData);
       })

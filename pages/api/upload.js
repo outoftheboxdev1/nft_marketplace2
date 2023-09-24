@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 // Use an Express Router for your routes
 import * as formidable from 'formidable';
 import fs from 'fs/promises'; // Use fs.promises for async file operations
@@ -56,8 +57,6 @@ export default async function handler(req, res) {
         console.error('MySQL connection is not authenticated');
         // return res.status(500).json({ message: 'Internal Server Error' });
       }
-
-      const responseSent = false; // Variable to track if a response has been sent
 
       // Check if walletid already exists in the database
       const checkSql = 'SELECT * FROM users WHERE walletid = ?';

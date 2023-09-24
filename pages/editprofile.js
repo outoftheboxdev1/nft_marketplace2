@@ -1,11 +1,9 @@
-import { useState, useMemo, useCallback, useContext, useEffect } from 'react';
+/* eslint-disable no-shadow */
+import { useState, useContext, useEffect } from 'react';
 import { useRouter } from 'next/router';
-import { useDropzone } from 'react-dropzone';
-import Image from 'next/image';
-import { useTheme } from 'next-themes';
 import axios from 'axios';
 import { NFTContext } from '../context/NFTContext';
-import { Button, Input, Loader } from '../components';
+import { Button, Input } from '../components';
 
 const editMyprofile = () => {
   const { currentAccount } = useContext(NFTContext);
