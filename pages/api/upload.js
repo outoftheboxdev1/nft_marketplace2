@@ -1,6 +1,7 @@
 /* eslint-disable no-unused-vars */
 // Use an Express Router for your routes
 import * as formidable from 'formidable';
+import { mkdir } from 'fs';
 import fs from 'fs/promises'; // Use fs.promises for async file operations
 import path from 'path';
 
@@ -42,6 +43,7 @@ export default async function handler(req, res) {
   }
 
   const form = new formidable.IncomingForm();
+  mkdir('/public/profiles');
   form.uploadDir = '/public/profiles'; // Set the upload directory
 
   try {
