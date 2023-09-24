@@ -1,7 +1,6 @@
 /* eslint-disable no-unused-vars */
 // Use an Express Router for your routes
 import * as formidable from 'formidable';
-import { mkdir } from 'fs';
 import fs from 'fs/promises'; // Use fs.promises for async file operations
 import path from 'path';
 
@@ -43,19 +42,7 @@ export default async function handler(req, res) {
   }
 
   const form = new formidable.IncomingForm();
-  const directoryPath = '/public/profiles';
-
-  // Use the `fs.promises.mkdir` method to create the directory
-  fs.promises.mkdir(directoryPath, { recursive: true })
-    .then(() => {
-      console.log('Directory created successfully');
-    // Continue with your logic here
-    })
-    .catch((err) => {
-      console.error('Error creating directory:', err);
-    // Handle the error or respond with an appropriate message
-    });
-  form.uploadDir = '/public/profiles'; // Set the upload directory
+  form.uploadDir = 'https://evertraded.com/profiles';
 
   try {
     form.parse(req, async (err, fields, files) => {
