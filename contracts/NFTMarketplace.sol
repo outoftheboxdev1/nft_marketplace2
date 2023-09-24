@@ -13,7 +13,7 @@ contract NFTMarketplace is ERC721URIStorage {
     Counters.Counter private _tokenIds;
     Counters.Counter private _itemsSold;
 
-    uint256 listingPrice = 0.001 ether;
+    uint256 listingPrice = 0.003 ether;
 
     uint256 ownerCommissionPercentage = 25;
     uint256 creatorCommissionPercentage = 1000 - ownerCommissionPercentage;
