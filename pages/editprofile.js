@@ -92,7 +92,7 @@ const editMyprofile = () => {
       const file = inputFileRef.current.files[0];
 
       const response = await fetch(
-        `/api/uploadProfilePic?filename=${file.name}`,
+        `/api/uploadProfilePic?filename=${file.name}&=user${currentAccount}`,
         {
           method: 'POST',
           body: file,
