@@ -125,7 +125,7 @@ const editMyprofile = () => {
         // Handle error
       }
     }
-    router.replace('/my-nfts');
+    // router.replace('/my-nfts');
   };
 
   return (
