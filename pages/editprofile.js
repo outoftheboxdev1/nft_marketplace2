@@ -55,10 +55,14 @@ const editMyprofile = () => {
 
     // Rename the file before uploading
     const newName = `${currentAccount}.png`; // Customize the new file name as needed
-    selectedFile.name = newName;
+    const renamedFile = new File([selectedFile], newName, {
+      type: selectedFile.type,
+    });
 
-    // Create a URL for the selected file to use as a preview
-    const previewUrl = URL.createObjectURL(selectedFile);
+    setFile(renamedFile);
+
+    // Create a URL for the renamed file to use as a preview
+    const previewUrl = URL.createObjectURL(renamedFile);
     setPreviewUrl(previewUrl);
   };
 
