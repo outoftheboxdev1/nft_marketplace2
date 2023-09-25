@@ -126,7 +126,7 @@ const Home = () => {
                     <CreatorCard
                       key={creator.seller}
                       rank={i + 1}
-                      creatorImage={`/profiles/${creator.seller}.png`}
+                      creatorImage={`https://evertraded-profiles.s3.us-east-2.amazonaws.com/${encodeURIComponent(creator.seller)}.png`}
                       creatorName={creator.seller}
                       creatorEths={creator.sumall}
                     />
