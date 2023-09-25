@@ -1,6 +1,6 @@
 module.exports = {
   reactStrictMode: false,
   images: {
-    domains: ['ipfs.infura.io', 'ever-traded.infura-ipfs.io', 'localhost', 'evertraded.com', 'evertraded.vercel.app', 'evertraded-profiles.s3.us-east-2.amazonaws.com'],
+    domains: ['ipfs.infura.io', 'ever-traded.infura-ipfs.io', 'localhost', 'evertraded.com', 'evertraded.vercel.app', 'evertraded-profiles.s3.us-east-2.amazonaws.com', 'shedzx2emmqxeebf.public.blob.vercel-storage.com'],
   },
 };
