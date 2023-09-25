@@ -7,6 +7,9 @@ export default async function handler(request, response) {
     access: 'public',
     addRandomSuffix: false,
     contentType: 'multipart/form-data;',
+    headers: {
+      'content-disposition': 'inline', // Set content-disposition to 'inline'
+    },
   });
 
   return response.status(200).json(blob);
