@@ -18,7 +18,7 @@ const editMyprofile = () => {
   const router = useRouter();
   console.log(router);
   const [currentAccount1, setCurrentAccount] = useState(undefined);
-  const inputFileRef = useRef(null);
+  // const inputFileRef = useRef(null);
   const [blob, setBlob] = useState(null);
 
   useEffect(() => {
@@ -98,8 +98,6 @@ const editMyprofile = () => {
     if (!renamedFile) {
       console.log('no file selected');
     } else {
-      const file = inputFileRef.current.files[0];
-
       const response = await fetch(
         `/api/uploadProfilePic?filename=${renamedFile.name}&user=${currentAccount}`,
         {
