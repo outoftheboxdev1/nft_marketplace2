@@ -47,7 +47,7 @@ const AssetDetails = () => {
   const [isLoading, setIsLoading] = useState(true);
   const router = useRouter();
   const { seller } = router.query;
-  const creatorImage = `https://evertraded-profiles.s3.us-east-2.amazonaws.com/${encodeURIComponent(seller)}.png`.toLowerCase();
+  const creatorImage = `https://shedzx2emmqxeebf.public.blob.vercel-storage.com/${encodeURIComponent(seller)}.png`.toLowerCase();
   const [userData, setUserData] = useState(null);
 
   const walletId = encodeURIComponent(nft.seller);
