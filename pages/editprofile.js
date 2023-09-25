@@ -1,5 +1,6 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable no-shadow */
-import { useState, useContext, useEffect } from 'react';
+import { useState, useContext, useEffect, useRef } from 'react';
 import { useRouter } from 'next/router';
 import axios from 'axios';
 import { NFTContext } from '../context/NFTContext';
@@ -14,6 +15,8 @@ const editMyprofile = () => {
   const router = useRouter();
   console.log(router);
   const [currentAccount1, setCurrentAccount] = useState(undefined);
+  const inputFileRef = useRef(null);
+  const [blob, setBlob] = useState(null);
 
   useEffect(() => {
     // When router.query.userid changes, update currentAccount1
@@ -76,7 +79,6 @@ const editMyprofile = () => {
     // }
 
     const formData = new FormData();
-    formData.append('file', file);
     formData.append('user', currentAccount);
     formData.append('name', formInput.name); // Add the name field to formData
     formData.append('bio', formInput.bio); // Add the bio field to formData
@@ -84,23 +86,44 @@ const editMyprofile = () => {
     // console.log('test');
     // console.log(formInput.name);
     // console.log(formInput.bio);
-    try {
-      const response = await fetch('api/upload', {
-        method: 'POST',
-        body: formData,
-      });
+    if (!file) {
+      console.log('no file selected');
+    } else {
+      const file = inputFileRef.current.files[0];
 
-      if (response.ok) {
-        console.log('File uploaded successfully');
-      // Handle success
-      } else {
-        console.error('File upload failed');
-        console.log(response.error);
-      // Handle error
+      const response = await fetch(
+        `/api/uploadProfilePic?filename=${file.name}`,
+        {
+          method: 'POST',
+          body: file,
+        },
+      );
+
+      const newBlob = await response.json();
+
+      setBlob(newBlob);
+    }
+    if (!formInput.name) {
+      console.log('no changes to form');
+    } else {
+      try {
+        const response = await fetch('api/upload', {
+          method: 'POST',
+          body: formData,
+        });
+
+        if (response.ok) {
+          console.log('File uploaded successfully');
+          // Handle success
+        } else {
+          console.error('File upload failed');
+          console.log(response.error);
+          // Handle error
+        }
+      } catch (error) {
+        console.error('Error uploading file:', error);
+        // Handle error
       }
-    } catch (error) {
-      console.error('Error uploading file:', error);
-    // Handle error
     }
     router.replace('/my-nfts');
   };
@@ -143,6 +166,7 @@ const editMyprofile = () => {
                 <input
                   type="file"
                   accept="image/png"
+                  ref={inputFileRef}
                   onChange={handleFileChange}
                   style={{ display: 'none' }}
                 />

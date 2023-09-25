@@ -12,7 +12,7 @@
     "@nomiclabs/hardhat-ethers": "^2.0.5",
     "@nomiclabs/hardhat-waffle": "^2.0.3",
     "@openzeppelin/contracts": "^4.5.0",
-    "aws-sdk": "^2.1463.0",
+    "@vercel/blob": "^0.12.5",
     "axios": "^0.26.0",
     "body-parser": "^1.20.2",
     "dotenv": "^16.3.1",
