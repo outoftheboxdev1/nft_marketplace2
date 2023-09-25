@@ -175,7 +175,6 @@ const editMyprofile = () => {
                 <input
                   type="file"
                   accept="image/png"
-                  ref={inputFileRef}
                   onChange={handleFileChange}
                   style={{ display: 'none' }}
                 />
