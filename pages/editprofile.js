@@ -5,21 +5,20 @@
 import { useState, useContext, useEffect, useRef } from 'react';
 import { useRouter } from 'next/router';
 import axios from 'axios';
-import fs from 'fs';
 import { NFTContext } from '../context/NFTContext';
 import { Button, Input } from '../components';
 
 const editMyprofile = () => {
   const { currentAccount } = useContext(NFTContext);
 
-  // const [renamedFile, setRenamedFile] = useState(null);
+  const [renamedFile, setRenamedFile] = useState(null);
   const [file, setFile] = useState(null);
   const [previewUrl, setPreviewUrl] = useState(null);
   const [formInput, updateFormInput] = useState({ name: '', bio: '' });
   const router = useRouter();
   console.log(router);
   const [currentAccount1, setCurrentAccount] = useState(undefined);
-  const inputFileRef = useRef(null);
+  // const inputFileRef = useRef(null);
   const [blob, setBlob] = useState(null);
 
   useEffect(() => {
@@ -57,18 +56,11 @@ const editMyprofile = () => {
     const selectedFile = e.target.files[0];
     setFile(selectedFile);
 
-    fs.rename(selectedFile, `${currentAccount}.png`, (err) => {
-      if (err) {
-        console.log(err);
-      } else {
-        console.log('File renamed successfully.');
-      }
-    });
     // Rename the file using the current account address
-    // const renamed = new File([selectedFile], `${currentAccount}.png`, {
-    //   type: selectedFile.type,
-    // });
-    // setRenamedFile(renamed); // Store the renamed file in state
+    const renamed = new File([selectedFile], `${currentAccount}.png`, {
+      type: selectedFile.type,
+    });
+    setRenamedFile(renamed); // Store the renamed file in state
 
     // Create a URL for the renamed file to use as a preview
     const previewUrl = URL.createObjectURL(selectedFile);
@@ -103,15 +95,14 @@ const editMyprofile = () => {
     // console.log('test');
     // console.log(formInput.name);
     // console.log(formInput.bio);
-    const file = inputFileRef.current.files[0];
-    if (!file) {
+    if (!renamedFile) {
       console.log('no file selected');
     } else {
       const response = await fetch(
-        `/api/uploadProfilePic?filename=${file.name}&user=${currentAccount}`,
+        `/api/uploadProfilePic?filename=${renamedFile.name}&user=${currentAccount}`,
         {
           method: 'POST',
-          body: file,
+          body: renamedFile,
         },
       );
 
@@ -183,7 +174,6 @@ const editMyprofile = () => {
                   type="file"
                   accept="image/png"
                   onChange={handleFileChange}
-                  ref={inputFileRef}
                   style={{ display: 'none' }}
                 />
 
