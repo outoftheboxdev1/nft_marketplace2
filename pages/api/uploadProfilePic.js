@@ -1,3 +1,5 @@
+'use server';
+
 import { put } from '@vercel/blob';
 
 export default async function handler(request, response) {

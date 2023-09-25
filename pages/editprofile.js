@@ -1,3 +1,5 @@
+'use client';
+
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-shadow */
 import { useState, useContext, useEffect, useRef } from 'react';
