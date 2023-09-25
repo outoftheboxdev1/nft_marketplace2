@@ -206,6 +206,11 @@ const editMyprofile = () => {
             />
           </div>
         </form>
+        {blob && (
+        <div>
+          Picture url: <a href={blob.url}>{blob.url}</a>
+        </div>
+        )}
       </div>
     </div>
   );
