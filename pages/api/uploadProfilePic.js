@@ -1,13 +1,13 @@
 import { put } from '@vercel/blob';
 
 export default async function handler(request, response) {
-  const currentAccount = request.body.get('user');
+  const { user } = request.query;
+  //   const currentAccount = request.body.get('user');
   const file = request.files.file[0];
-  const filename = `${currentAccount}.png`;
+  const filenameOutput = `${user}.png`;
 
-  const blob = await put(filename, file, {
+  const blob = await put(filenameOutput, file, {
     access: 'public',
   });
-
   return response.status(200).json(blob);
 }
