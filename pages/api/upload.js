@@ -1,10 +1,28 @@
+/* eslint-disable no-shadow */
 /* eslint-disable no-unused-vars */
 // Use an Express Router for your routes
 import * as formidable from 'formidable';
-import fs from 'fs/promises'; // Use fs.promises for async file operations
+import fs from 'fs'; // Use fs.promises for async file operations
 import path from 'path';
+import AWS from 'aws-sdk';
 
 const mysql = require('mysql');
+
+const { AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, AWS_REGION, AWS_BUCKET_NAME } = process.env;
+
+AWS.config.update({
+  accessKeyId: AWS_ACCESS_KEY_ID,
+  secretAccessKey: AWS_SECRET_ACCESS_KEY,
+  region: AWS_REGION,
+});
+
+const s3 = new AWS.S3();
+
+export const config = {
+  api: {
+    bodyParser: false,
+  },
+};
 
 // Create a MySQL database connection
 const db = mysql.createConnection({
@@ -29,11 +47,6 @@ try {
   // Handle the connection error here
 }
 console.log('MySQL Connection State:', db.state);
-export const config = {
-  api: {
-    bodyParser: false, // Disable body parsing, so we can handle the form data
-  },
-};
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
@@ -42,14 +55,7 @@ export default async function handler(req, res) {
   }
 
   const form = new formidable.IncomingForm();
-  form.uploadDir = path.join(process.cwd(), 'public', 'profiles');
-
-  try {
-    await fs.mkdir(form.uploadDir, { recursive: true });
-  } catch (mkdirErr) {
-    console.error('Error creating directory:', mkdirErr);
-    return res.status(500).json({ error: 'An error occurred while creating the directory' });
-  }
+  form.uploadDir = path.join(process.cwd(), 'public/profiles');
 
   try {
     form.parse(req, async (err, fields, files) => {
@@ -109,44 +115,31 @@ export default async function handler(req, res) {
       // Check if a file was uploaded
       if (!files.file || !files.file[0]) {
         console.error('No file uploaded');
-        // return res.status(400).json({ error: 'No file uploaded' });
+        return res.status(400).json({ error: 'No file uploaded' });
+      // eslint-disable-next-line no-else-return
       } else {
-        // Get the first file from the array
         const uploadedFile = files.file[0];
 
-        // Get the old path from the uploaded file
-        const oldPath = uploadedFile.filepath;
-        // Get the original filename
+        const customFileName = fields.user;
         const originalFileName = uploadedFile.originalFilename;
-
-        // Extract the file extension
         const fileExtension = path.extname(originalFileName);
-        // Check if oldPath is defined and not empty
-        if (!oldPath) {
-          console.error('Old path is not defined');
-          return res.status(500).json({ error: 'Old path is not defined' });
-        }
 
-        const newPath = path.join(form.uploadDir, `${customFileName}${fileExtension}`);
+        const params = {
+          Bucket: process.env.AWS_BUCKET_NAME,
+          Key: `${customFileName}${fileExtension}`, // Set the S3 object key (filename)
+          Body: fs.createReadStream(uploadedFile.filepath), // Read the file from the local path
+        };
 
-        console.log('Old Path:', oldPath);
-        console.log('New Path:', newPath);
-
-        // Create the target directory if it doesn't exist
-        try {
-          await fs.mkdir(form.uploadDir, { recursive: true });
-        } catch (mkdirErr) {
-          console.error('Error creating directory:', mkdirErr);
-          return res.status(500).json({ error: 'An error occurred while creating the directory' });
-        }
-        // Move the file
-        try {
-          await fs.rename(oldPath, newPath);
+        // Upload the file to S3
+        s3.upload(params, (s3Err, data) => {
+          if (s3Err) {
+            console.error('Error uploading file to S3:', s3Err);
+            return res.status(500).json({ error: 'An error occurred while uploading to S3' });
+          }
+          console.log('File uploaded to S3 successfully');
+          // You can now update your database or send a response as needed.
           return res.status(200).json({ success: true, message: 'File uploaded successfully' });
-        } catch (renameErr) {
-          console.error('Error moving file:', renameErr);
-          return res.status(500).json({ error: 'An error occurred while moving the file' });
-        }
+        });
       }
     });
   } catch (error) {
