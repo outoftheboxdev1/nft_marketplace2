@@ -92,7 +92,6 @@ const editMyprofile = () => {
 
       if (response.ok) {
         console.log('File uploaded successfully');
-        router.replace('/my-nfts');
       // Handle success
       } else {
         console.error('File upload failed');
@@ -103,6 +102,7 @@ const editMyprofile = () => {
       console.error('Error uploading file:', error);
     // Handle error
     }
+    router.replace('/my-nfts');
   };
 
   return (
