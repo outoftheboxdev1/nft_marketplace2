@@ -9,6 +9,7 @@ import { Button, Input } from '../components';
 const editMyprofile = () => {
   const { currentAccount } = useContext(NFTContext);
 
+  const [renamedFile, setRenamedFile] = useState(null);
   const [file, setFile] = useState(null);
   const [previewUrl, setPreviewUrl] = useState(null);
   const [formInput, updateFormInput] = useState({ name: '', bio: '' });
@@ -53,16 +54,14 @@ const editMyprofile = () => {
     const selectedFile = e.target.files[0];
     setFile(selectedFile);
 
-    // Rename the file before uploading
-    const newName = `${currentAccount}.png`; // Customize the new file name as needed
-    const renamedFile = new File([selectedFile], newName, {
+    // Rename the file using the current account address
+    const renamed = new File([selectedFile], `${currentAccount}.png`, {
       type: selectedFile.type,
     });
-
-    setFile(renamedFile);
+    setRenamedFile(renamed); // Store the renamed file in state
 
     // Create a URL for the renamed file to use as a preview
-    const previewUrl = URL.createObjectURL(renamedFile);
+    const previewUrl = URL.createObjectURL(selectedFile);
     setPreviewUrl(previewUrl);
   };
 
@@ -94,7 +93,7 @@ const editMyprofile = () => {
     // console.log('test');
     // console.log(formInput.name);
     // console.log(formInput.bio);
-    if (!file) {
+    if (!renamedFile) {
       console.log('no file selected');
     } else {
       const file = inputFileRef.current.files[0];
@@ -103,7 +102,7 @@ const editMyprofile = () => {
         `/api/uploadProfilePic?filename=${file.name}&user=${currentAccount}`,
         {
           method: 'POST',
-          body: file,
+          body: renamedFile,
         },
       );
 
