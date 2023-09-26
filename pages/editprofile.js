@@ -1,8 +1,5 @@
-'use client';
-
-/* eslint-disable no-unused-vars */
 /* eslint-disable no-shadow */
-import { useState, useContext, useEffect, useRef } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import axios from 'axios';
 import { NFTContext } from '../context/NFTContext';
@@ -11,15 +8,12 @@ import { Button, Input } from '../components';
 const editMyprofile = () => {
   const { currentAccount } = useContext(NFTContext);
 
-  const [renamedFile, setRenamedFile] = useState(null);
   const [file, setFile] = useState(null);
   const [previewUrl, setPreviewUrl] = useState(null);
   const [formInput, updateFormInput] = useState({ name: '', bio: '' });
   const router = useRouter();
   console.log(router);
   const [currentAccount1, setCurrentAccount] = useState(undefined);
-  // const inputFileRef = useRef(null);
-  const [blob, setBlob] = useState(null);
 
   useEffect(() => {
     // When router.query.userid changes, update currentAccount1
@@ -56,13 +50,7 @@ const editMyprofile = () => {
     const selectedFile = e.target.files[0];
     setFile(selectedFile);
 
-    // Rename the file using the current account address
-    const renamed = new File([selectedFile], `${currentAccount}.png`, {
-      type: selectedFile.type,
-    });
-    setRenamedFile(renamed); // Store the renamed file in state
-
-    // Create a URL for the renamed file to use as a preview
+    // Create a URL for the selected file to use as a preview
     const previewUrl = URL.createObjectURL(selectedFile);
     setPreviewUrl(previewUrl);
   };
@@ -88,6 +76,7 @@ const editMyprofile = () => {
     // }
 
     const formData = new FormData();
+    formData.append('file', file);
     formData.append('user', currentAccount);
     formData.append('name', formInput.name); // Add the name field to formData
     formData.append('bio', formInput.bio); // Add the bio field to formData
@@ -95,44 +84,25 @@ const editMyprofile = () => {
     // console.log('test');
     // console.log(formInput.name);
     // console.log(formInput.bio);
-    if (!renamedFile) {
-      console.log('no file selected');
-    } else {
-      const response = await fetch(
-        `/api/uploadProfilePic?filename=${renamedFile.name}&user=${currentAccount}`,
-        {
-          method: 'POST',
-          body: renamedFile,
-        },
-      );
+    try {
+      const response = await fetch('api/upload', {
+        method: 'POST',
+        body: formData,
+      });
 
-      const newBlob = await response.json();
-
-      setBlob(newBlob);
-    }
-    if (!formInput.name) {
-      console.log('no changes to form');
-    } else {
-      try {
-        const response = await fetch('api/upload', {
-          method: 'POST',
-          body: formData,
-        });
-
-        if (response.ok) {
-          console.log('File uploaded successfully');
-          // Handle success
-        } else {
-          console.error('File upload failed');
-          console.log(response.error);
-          // Handle error
-        }
-      } catch (error) {
-        console.error('Error uploading file:', error);
-        // Handle error
+      if (response.ok) {
+        console.log('File uploaded successfully');
+      // Handle success
+      } else {
+        console.error('File upload failed');
+        console.log(response.error);
+      // Handle error
       }
+    } catch (error) {
+      console.error('Error uploading file:', error);
+    // Handle error
     }
-    // router.replace('/my-nfts');
+    router.replace('/my-nfts');
   };
 
   return (
@@ -212,11 +182,6 @@ const editMyprofile = () => {
             />
           </div>
         </form>
-        {blob && (
-        <div>
-          Picture url: <a href={blob.url}>{blob.url}</a>
-        </div>
-        )}
       </div>
     </div>
   );
