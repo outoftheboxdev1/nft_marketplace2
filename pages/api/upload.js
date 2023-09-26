@@ -117,7 +117,7 @@ export default async function handler(req, res) {
         return res.status(400).json({ error: 'No file uploaded' });
       }
       const uploadedFile = files.file[0];
-      const fileExtension = '.png';
+      const fileExtension = path.extname(uploadedFile.originalFilename);
       const fileName = `${customFileName}${fileExtension}`; // Set the S3 object key (filename)
 
       // Read the file from the local path
@@ -126,7 +126,7 @@ export default async function handler(req, res) {
       const params = {
         Bucket: process.env.AWS_BUCKET_NAME,
         Key: fileName,
-        Body: `${fileContent}.png`,
+        Body: fileContent,
       };
 
       // Upload the file to S3
@@ -140,7 +140,7 @@ export default async function handler(req, res) {
 
         // If you want to move the file to a different folder in S3, you can use the CopyObject API
         // For example, to move the file to a "new-folder" in the same bucket:
-        const newKey = `${customFileName}.png`;
+        const newKey = `${customFileName}${fileExtension}`;
         const copyParams = {
           Bucket: process.env.AWS_BUCKET_NAME,
           CopySource: `${process.env.AWS_BUCKET_NAME}/${fileName}`, // Use the full S3 path
