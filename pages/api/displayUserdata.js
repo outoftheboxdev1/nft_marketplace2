@@ -24,7 +24,7 @@ router.get('/api/displayUserdata', (req, res) => {
   function executeQueryWithRetry(connection, attempt) {
     connection.query(query, [userId], (err, results) => {
       if (err) {
-        console.error(`Error on attempt ${attempt}: ${err.message}`);
+        // console.error(`Error on attempt ${attempt}: ${err.message}`);
 
         // Retry logic: You can adjust the number of retries and delay as needed
         if (attempt < 3) {

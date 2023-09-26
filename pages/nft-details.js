@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable no-shadow */
 import { useState, useEffect, useContext } from 'react';
 import { useRouter } from 'next/router';
@@ -59,7 +60,7 @@ const AssetDetails = () => {
         setUserData(userData);
       })
       .catch((error) => {
-        console.error('Error fetching user data:', error);
+        // console.error('Error fetching user data:', error);
       });
   }, [walletId]);
 

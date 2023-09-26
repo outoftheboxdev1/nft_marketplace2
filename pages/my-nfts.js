@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { useEffect, useState, useContext } from 'react';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
@@ -26,7 +27,7 @@ const MyNFTs = () => {
         setUserData(userData);
       })
       .catch((error) => {
-        console.error('Error fetching user data:', error);
+        // console.error('Error fetching user data:', error);
       });
   }, [walletId]);
   useEffect(() => {

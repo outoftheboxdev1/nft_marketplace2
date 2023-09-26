@@ -22,7 +22,7 @@ export const NFTProvider = ({ children }) => {
 
     const data = await contract.fetchMarketItems();
 
-    console.log(data);
+    // console.log(data);
 
     const items = await Promise.all(data.map(async ({ tokenId, seller, owner, price: unformattedPrice }) => {
       const tokenURI = await contract.tokenURI(tokenId);
@@ -75,14 +75,14 @@ export const NFTProvider = ({ children }) => {
       setIsLoadingNFT(true);
       await transaction.wait();
       setIsLoadingNFT(false);
-      console.log('Transaction successful');
+      // console.log('Transaction successful');
     } catch (error) {
       if (error.message.includes('insufficient funds for gas')) {
         // Handle insufficient funds error here
         alert('Insufficient funds. Please make sure you have enough ETH.');
       }
       // Handle other errors
-      console.error('Error:', error);
+      // console.error('Error:', error);
       // You can display a different error message or handle it as needed
       return false;
     } finally {
@@ -109,7 +109,7 @@ export const NFTProvider = ({ children }) => {
         alert('Insufficient funds. Please make sure you have enough ETH.');
       }
       // Handle other errors
-      console.error('Error:', error);
+      // console.error('Error:', error);
       // You can display a different error message or handle it as needed
       return false;
     } finally {
@@ -134,7 +134,7 @@ export const NFTProvider = ({ children }) => {
     if (accounts.length) {
       setCurrentAccount(accounts[0]);
     } else {
-      console.log('No accounts found');
+      // console.log('No accounts found');
     }
   };
 

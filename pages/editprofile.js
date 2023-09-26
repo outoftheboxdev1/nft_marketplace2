@@ -12,7 +12,7 @@ const editMyprofile = () => {
   const [previewUrl, setPreviewUrl] = useState(null);
   const [formInput, updateFormInput] = useState({ name: '', bio: '' });
   const router = useRouter();
-  console.log(router);
+  // console.log(router);
   const [currentAccount1, setCurrentAccount] = useState(undefined);
 
   useEffect(() => {
@@ -33,12 +33,12 @@ const editMyprofile = () => {
           if (response.status === 200) {
             const { data } = response;
             updateFormInput({ name: data.username, bio: data.bio });
-            console.log('User data:', data);
+            // console.log('User data:', data);
           } else {
-            console.error('Error fetching user profile data');
+            // console.error('Error fetching user profile data');
           }
         } catch (error) {
-          console.error('Error fetching user profile data:', error);
+          // console.error('Error fetching user profile data:', error);
         }
       };
 
@@ -91,15 +91,15 @@ const editMyprofile = () => {
       });
 
       if (response.ok) {
-        console.log('File uploaded successfully');
+        // console.log('File uploaded successfully');
       // Handle success
       } else {
-        console.error('File upload failed');
-        console.log(response.error);
+        // console.error('File upload failed');
+        // console.log(response.error);
       // Handle error
       }
     } catch (error) {
-      console.error('Error uploading file:', error);
+      // console.error('Error uploading file:', error);
     // Handle error
     }
     router.replace('/my-nfts');

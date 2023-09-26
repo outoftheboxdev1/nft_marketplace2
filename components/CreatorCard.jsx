@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable no-shadow */
 import { useContext, useState, useEffect } from 'react';
 import Image from 'next/image';
@@ -21,7 +22,7 @@ const CreatorCard = ({ rank, creatorImage, creatorName, creatorEths }) => {
         setUserData(userData);
       })
       .catch((error) => {
-        console.error('Error fetching user data:', error);
+        // console.error('Error fetching user data:', error);
       });
   }, [walletId]);
   useEffect(() => {

@@ -15,9 +15,9 @@ const db = mysql.createConnection({
 // Connect to the database
 db.connect((err) => {
   if (err) {
-    console.error('MySQL connection error:', err);
+    // console.error('MySQL connection error:', err);
   } else {
-    console.log('Connected to MySQL database');
+    // console.log('Connected to MySQL database');
   }
 });
 
@@ -29,10 +29,10 @@ router.post('/api/subscribe', (req, res) => {
   const sql = 'INSERT INTO emails (email) VALUES (?)';
   db.query(sql, [email], (err, result) => {
     if (err) {
-      console.error('MySQL query error:', err);
+      // console.error('MySQL query error:', err);
       res.status(500).json({ message: 'Internal Server Error' });
     } else {
-      console.log('Email inserted into MySQL database');
+      // console.log('Email inserted into MySQL database');
       res.status(200).json({ message: 'Subscription successful' });
     }
   });
@@ -40,7 +40,7 @@ router.post('/api/subscribe', (req, res) => {
 
 // Error handling middleware (should be placed after your routes)
 router.use((err, req, res, next) => {
-  console.error(err);
+  // console.error(err);
   res.status(500).json({ message: 'Internal Server Error' });
 });
 

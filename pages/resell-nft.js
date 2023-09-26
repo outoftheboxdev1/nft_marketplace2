@@ -38,16 +38,16 @@ const ResellNFT = () => {
       });
 
       if (response.ok) {
-        console.log('Successfully Uploaded to Database');
+        // console.log('Successfully Uploaded to Database');
       // Handle success
       } else {
-        console.error('Database Record Not Added');
-        console.log(response.error);
+        // console.error('Database Record Not Added');
+        // console.log(response.error);
       // Handle error
       }
       router.push('/');
     } catch (error) {
-      console.error('Error uploading database info:', error);
+      // console.error('Error uploading database info:', error);
     // Handle error
     }
     router.push('/');

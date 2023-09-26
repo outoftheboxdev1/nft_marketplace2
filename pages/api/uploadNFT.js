@@ -17,17 +17,17 @@ const db = mysql.createConnection({
 try {
   db.connect((err) => {
     if (err) {
-      console.error('MySQL connection error:', err);
+      // console.error('MySQL connection error:', err);
       // Handle the connection error here, you might want to retry connecting
     } else {
-      console.log('Connected to MySQL database');
+      // console.log('Connected to MySQL database');
     }
   });
 } catch (error) {
-  console.error('Error connecting to MySQL:', error);
+  // console.error('Error connecting to MySQL:', error);
   // Handle the connection error here
 }
-console.log('MySQL Connection State:', db.state);
+// console.log('MySQL Connection State:', db.state);
 export const config = {
   api: {
     bodyParser: false, // Disable body parsing, so we can handle the form data
@@ -54,7 +54,7 @@ export default async function handler(req, res) {
 
       // Check if the MySQL connection is established
       if (db.state !== 'authenticated') {
-        console.error('MySQL connection is not authenticated');
+        // console.error('MySQL connection is not authenticated');
         // return res.status(500).json({ message: 'Internal Server Error' });
       }
 
@@ -62,11 +62,11 @@ export default async function handler(req, res) {
       const checkSql = 'SELECT * FROM nfts WHERE path = ?';
       db.query(checkSql, [nftPath], (checkErr, checkResults) => {
         if (checkErr) {
-          console.error('MySQL query error:', checkErr);
+          // console.error('MySQL query error:', checkErr);
           return res.status(500).json({ message: 'Internal Server Error' });
         } if (checkResults.length > 0) {
           // A record with the same walletid already exists
-          console.log('Wallet ID already exists in the database, updating the record');
+          // console.log('Wallet ID already exists in the database, updating the record');
 
         //   // Update the existing record
         //   const updateSql = 'UPDATE users SET path = ?, price = ? WHERE walletid = ?';
@@ -85,34 +85,34 @@ export default async function handler(req, res) {
           if (name) {
             db.query(insertSql, [nftPath, price, nftUrl, walletid, name, description, category], (insertErr, result) => {
               if (insertErr) {
-                console.error('MySQL query error:', insertErr);
+                // console.error('MySQL query error:', insertErr);
                 return res.status(500).json({ message: 'Internal Server Error' });
               }
-              console.log('Data inserted into MySQL database');
+              // console.log('Data inserted into MySQL database');
               return res.status(200).json({ message: 'Data inserted successfully' });
             });
           }
-          console.log(nftPath);
+          // console.log(nftPath);
           const nftPath1 = nftPath.toString().replace('https://ever-traded.infura-ipfs.io/ipfs/', '');
 
           const insertSql1 = 'INSERT INTO nftprices (path, price, seller) VALUES (?, ?, ?)';
           db.query(insertSql1, [nftPath1, price, walletid], (insertErr1, result) => {
             if (insertErr1) {
-              console.error('MySQL query error:', insertErr1);
+              // console.error('MySQL query error:', insertErr1);
               return res.status(500).json({ message: 'Internal Server Error' });
             }
-            console.log('Data inserted into MySQL database');
+            // console.log('Data inserted into MySQL database');
             return res.status(200).json({ message: 'Data inserted successfully' });
           });
         }
       });
       if (err) {
-        console.error('Error parsing form:', err);
+        // console.error('Error parsing form:', err);
         return res.status(500).json({ error: 'An error occurred while parsing the form' });
       }
     });
   } catch (error) {
-    console.error('Error inserting data:', error);
+    // console.error('Error inserting data:', error);
     return res.status(500).json({ error: 'Internal server error' });
   }
 }

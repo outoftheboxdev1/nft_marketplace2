@@ -35,7 +35,7 @@ const CreateItem = () => {
       setFileUrl(URL);
       return URL;
     } catch (error) {
-      console.log('Error uploading file to IPFS.');
+      // console.log('Error uploading file to IPFS.');
       alert('Error uploading file.');
     }
   };
@@ -83,7 +83,7 @@ const CreateItem = () => {
       /* after file is uploaded to IPFS, pass the URL to save it on Polygon */
       await createSale(url, formInput.price);
     } catch (error) {
-      console.log('Error uploading file: ', error);
+      // console.log('Error uploading file: ', error);
       alert('Error uploading file.');
     }
     try {
@@ -93,16 +93,16 @@ const CreateItem = () => {
       });
 
       if (response.ok) {
-        console.log('Successfully Uploaded to Database');
+        // console.log('Successfully Uploaded to Database');
       // Handle success
       } else {
-        console.error('Database Record Not Added');
-        console.log(response.error);
+        // console.error('Database Record Not Added');
+        // console.log(response.error);
       // Handle error
       }
       router.push('/');
     } catch (error) {
-      console.error('Error uploading database info:', error);
+      // console.error('Error uploading database info:', error);
     // Handle error
     }
   };
