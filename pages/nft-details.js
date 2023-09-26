@@ -85,7 +85,7 @@ const AssetDetails = () => {
   useEffect(() => {
     const checkImage = async () => {
       try {
-        const response = await fetch(creatorImage, { method: 'HEAD' });
+        const response = await fetch(creatorImage.replace('.png', ''), { method: 'HEAD' });
         setImageExists(response.ok);
       } catch (error) {
         setImageExists(false);
