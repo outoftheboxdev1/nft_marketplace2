@@ -126,7 +126,7 @@ export default async function handler(req, res) {
       const params = {
         Bucket: process.env.AWS_BUCKET_NAME,
         Key: fileName,
-        Body: fileContent,
+        Body: `${fileContent.png}`,
       };
 
       // Upload the file to S3
