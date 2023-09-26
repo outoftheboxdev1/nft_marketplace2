@@ -66,47 +66,47 @@ export default async function handler(req, res) {
       const { name } = fields;
       const { bio } = fields;
       const walletid = fields.user;
-
+      if (!name) { console.log('no data changed'); } else {
       // Check if the MySQL connection is established
-      if (db.state !== 'authenticated') {
-        console.error('MySQL connection is not authenticated');
+        if (db.state !== 'authenticated') {
+          console.error('MySQL connection is not authenticated');
         // return res.status(500).json({ message: 'Internal Server Error' });
-      }
-
-      // Check if walletid already exists in the database
-      const checkSql = 'SELECT * FROM users WHERE walletid = ?';
-      db.query(checkSql, [walletid], (checkErr, checkResults) => {
-        if (checkErr) {
-          console.error('MySQL query error:', checkErr);
-          return res.status(500).json({ message: 'Internal Server Error' });
-        } if (checkResults.length > 0) {
-          // A record with the same walletid already exists
-          console.log('Wallet ID already exists in the database, updating the record');
-
-          // Update the existing record
-          const updateSql = 'UPDATE users SET username = ?, bio = ? WHERE walletid = ?';
-          db.query(updateSql, [name, bio, walletid], (updateErr, updateResult) => {
-            if (updateErr) {
-              console.error('MySQL query error:', updateErr);
-              return res.status(500).json({ message: 'Internal Server Error' });
-            }
-            console.log('Data updated in MySQL database');
-            // return res.status(200).json({ message: 'Data updated successfully' });
-          });
-        } else {
-          // Insert the email into the MySQL database
-          const insertSql = 'INSERT INTO users (username, bio, walletid) VALUES (?, ?, ?)';
-          db.query(insertSql, [name, bio, walletid], (insertErr, result) => {
-            if (insertErr) {
-              console.error('MySQL query error:', insertErr);
-              return res.status(500).json({ message: 'Internal Server Error' });
-            }
-            console.log('Data inserted into MySQL database');
-            // return res.status(200).json({ message: 'Data inserted successfully' });
-          });
         }
-      });
 
+        // Check if walletid already exists in the database
+        const checkSql = 'SELECT * FROM users WHERE walletid = ?';
+        db.query(checkSql, [walletid], (checkErr, checkResults) => {
+          if (checkErr) {
+            console.error('MySQL query error:', checkErr);
+            return res.status(500).json({ message: 'Internal Server Error' });
+          } if (checkResults.length > 0) {
+          // A record with the same walletid already exists
+            console.log('Wallet ID already exists in the database, updating the record');
+
+            // Update the existing record
+            const updateSql = 'UPDATE users SET username = ?, bio = ? WHERE walletid = ?';
+            db.query(updateSql, [name, bio, walletid], (updateErr, updateResult) => {
+              if (updateErr) {
+                console.error('MySQL query error:', updateErr);
+                return res.status(500).json({ message: 'Internal Server Error' });
+              }
+              console.log('Data updated in MySQL database');
+            // return res.status(200).json({ message: 'Data updated successfully' });
+            });
+          } else {
+          // Insert the email into the MySQL database
+            const insertSql = 'INSERT INTO users (username, bio, walletid) VALUES (?, ?, ?)';
+            db.query(insertSql, [name, bio, walletid], (insertErr, result) => {
+              if (insertErr) {
+                console.error('MySQL query error:', insertErr);
+                return res.status(500).json({ message: 'Internal Server Error' });
+              }
+              console.log('Data inserted into MySQL database');
+            // return res.status(200).json({ message: 'Data inserted successfully' });
+            });
+          }
+        });
+      }
       if (err) {
         console.error('Error parsing form:', err);
         return res.status(500).json({ error: 'An error occurred while parsing the form' });
