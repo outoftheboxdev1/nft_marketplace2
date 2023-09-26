@@ -54,7 +54,6 @@ export default async function handler(req, res) {
   }
 
   const form = new formidable.IncomingForm();
-  form.uploadDir = path.join(process.cwd(), 'public/profiles');
 
   try {
     form.parse(req, async (err, fields, files) => {
@@ -144,7 +143,7 @@ export default async function handler(req, res) {
         const newKey = `${customFileName}`;
         const copyParams = {
           Bucket: process.env.AWS_BUCKET_NAME,
-          CopySource: `/${process.env.AWS_BUCKET_NAME}/${fileName}`,
+          CopySource: `${process.env.AWS_BUCKET_NAME}/${fileName}`, // Use the full S3 path
           Key: newKey,
         };
         s3.copyObject(copyParams, (copyErr, copyData) => {
