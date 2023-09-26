@@ -4,7 +4,9 @@
 import * as formidable from 'formidable';
 import fs from 'fs'; // Use fs.promises for async file operations
 import path from 'path';
-import AWS from 'aws-sdk';
+import * as AWS from 'aws-sdk';
+
+import { parse } from 'url';
 
 const mysql = require('mysql');
 
@@ -118,16 +120,14 @@ export default async function handler(req, res) {
         return res.status(400).json({ error: 'No file uploaded' });
       // eslint-disable-next-line no-else-return
       } else {
+        const customFileName = fields.user; // Use this as the filename
         const uploadedFile = files.file[0];
-
-        const customFileName = fields.user;
-        const originalFileName = uploadedFile.originalFilename;
-        const fileExtension = path.extname(originalFileName);
+        const fileExtension = '.png';
 
         const params = {
           Bucket: process.env.AWS_BUCKET_NAME,
           Key: `${customFileName}${fileExtension}`, // Set the S3 object key (filename)
-          Body: fs.createReadStream(uploadedFile.filepath), // Read the file from the local path
+          Body: uploadedFile, // Read the file from the local path
         };
 
         // Upload the file to S3
