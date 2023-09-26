@@ -47,7 +47,8 @@ const AssetDetails = () => {
   const [isLoading, setIsLoading] = useState(true);
   const router = useRouter();
   const { seller } = router.query;
-  const creatorImage = `https://evertraded-profiles.s3.us-east-2.amazonaws.com/${encodeURIComponent(seller)}.png`;
+  const seller1 = seller.toLowerCase();
+  const creatorImage = `https://evertraded-profiles.s3.us-east-2.amazonaws.com/${encodeURIComponent(seller1)}.png`;
   const [userData, setUserData] = useState(null);
 
   const walletId = encodeURIComponent(nft.seller);
@@ -85,7 +86,7 @@ const AssetDetails = () => {
   useEffect(() => {
     const checkImage = async () => {
       try {
-        const response = await fetch(creatorImage.toLowerCase().replace('.png', ''), { method: 'HEAD' });
+        const response = await fetch(creatorImage.replace('.png', ''), { method: 'HEAD' });
         setImageExists(response.ok);
       } catch (error) {
         setImageExists(false);
