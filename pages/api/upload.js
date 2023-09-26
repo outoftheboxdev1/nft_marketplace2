@@ -143,7 +143,7 @@ export default async function handler(req, res) {
         const newKey = `${customFileName}.png`;
         const copyParams = {
           Bucket: process.env.AWS_BUCKET_NAME,
-          CopySource: `${process.env.AWS_BUCKET_NAME}/${fileName}`, // Use the full S3 path
+          CopySource: `${process.env.AWS_BUCKET_NAME}/${fileName}.png`, // Use the full S3 path
           Key: newKey,
         };
         s3.copyObject(copyParams, (copyErr, copyData) => {
