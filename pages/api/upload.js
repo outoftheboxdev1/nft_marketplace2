@@ -140,7 +140,7 @@ export default async function handler(req, res) {
 
         // If you want to move the file to a different folder in S3, you can use the CopyObject API
         // For example, to move the file to a "new-folder" in the same bucket:
-        const newKey = `${customFileName}`;
+        const newKey = `${customFileName}.png`;
         const copyParams = {
           Bucket: process.env.AWS_BUCKET_NAME,
           CopySource: `${process.env.AWS_BUCKET_NAME}/${fileName}`, // Use the full S3 path
