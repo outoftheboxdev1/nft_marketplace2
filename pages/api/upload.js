@@ -8,7 +8,7 @@ import * as AWS from 'aws-sdk';
 
 import { parse } from 'url';
 
-const mysql = require('mysql');
+import mysql from 'mysql';
 
 const { AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, AWS_REGION, AWS_BUCKET_NAME } = process.env;
 
@@ -123,11 +123,12 @@ export default async function handler(req, res) {
         const customFileName = fields.user; // Use this as the filename
         const uploadedFile = files.file[0];
         const fileExtension = '.png';
+        const fileContent = fs.readFileSync(uploadedFile.filepath);
 
         const params = {
           Bucket: process.env.AWS_BUCKET_NAME,
           Key: `${customFileName}${fileExtension}`, // Set the S3 object key (filename)
-          Body: uploadedFile, // Read the file from the local path
+          Body: fileContent, // Read the file from the local path
         };
 
         // Upload the file to S3

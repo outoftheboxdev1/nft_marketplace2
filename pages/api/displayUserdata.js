@@ -44,12 +44,12 @@ router.get('/api/displayUserdata', (req, res) => {
       }
     });
   }
-
   // Create a new database connection for each attempt
   const dbConnection = createDbConnection();
 
   // Start the initial query attempt
   executeQueryWithRetry(dbConnection, 1);
+  dbConnection.end();
 });
 
 // Export the router to be used in your main server file
