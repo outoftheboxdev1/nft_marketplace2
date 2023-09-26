@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import Image from 'next/image';
 import { useTheme } from 'next-themes';
 import Link from 'next/link';
@@ -64,7 +65,7 @@ const Footer = () => {
           alert('Email Already Registered');
         }
       })
-      .catch((error) => {
+      .catch(() => {
         // console.error('Error:', error);
       });
   };

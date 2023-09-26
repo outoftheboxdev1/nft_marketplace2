@@ -21,7 +21,7 @@ const CreatorCard = ({ rank, creatorImage, creatorName, creatorEths }) => {
         const userData = response.data;
         setUserData(userData);
       })
-      .catch((error) => {
+      .catch(() => {
         // console.error('Error fetching user data:', error);
       });
   }, [walletId]);
