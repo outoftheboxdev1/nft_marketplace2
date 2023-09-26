@@ -117,7 +117,8 @@ export default async function handler(req, res) {
         return res.status(400).json({ error: 'No file uploaded' });
       }
       const uploadedFile = files.file[0];
-      const fileExtension = path.extname(uploadedFile.originalFilename);
+      const originalFilename = uploadedFile.name;
+      const fileExtension = path.extname(originalFilename);
       const fileName = `${customFileName}${fileExtension}`; // Set the S3 object key (filename)
 
       // Read the file from the local path
