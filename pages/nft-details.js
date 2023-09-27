@@ -125,7 +125,7 @@ const AssetDetails = () => {
           <div className="flex flex-row items-center mt-3">
             <div className="relative w-12 h-12 minlg:w-20 minlg:h-20 mr-2">
               {imageExists ? (
-                <Image src={creatorImage} objectFit="cover" loading="eager" width={68} height={68} key={nft.seller} className="rounded-full" />
+                <Image src={creatorImage.replace('.png', '')} objectFit="cover" loading="eager" width={68} height={68} key={nft.seller} className="rounded-full" />
               ) : (
                 <Image src={images.creator1} key={nft.seller} loading="eager" objectFit="cover" className="rounded-full" />
               )}

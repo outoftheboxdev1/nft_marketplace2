@@ -93,7 +93,7 @@ const MyNFTs = () => {
 
         <div className="flexCenter flex-col -mt-20 z-0">
           <div className="flexCenter w-40 h-40 sm:w-36 sm:h-36 p-1 bg-nft-black-2 rounded-full relative">
-            <Image src={`https://evertraded-profiles.s3.us-east-2.amazonaws.com/${encodeURIComponent(currentAccount)}.png`} className="rounded-full object-cover" height={168} width={168} objectFit="cover" priority />
+            <Image src={`https://evertraded-profiles.s3.us-east-2.amazonaws.com/${encodeURIComponent(currentAccount)}`} className="rounded-full object-cover" height={168} width={168} objectFit="cover" priority />
             {userData && userData.verified !== '0' ? (
               <div className="w-10 h-10 absolute bottom-3 right-0 sm:w-7 sm:h-7 sm:bottom-3 sm:right-1">
                 <Image src={images.tick} layout="fill" objectFit="contain" alt="tick" />
