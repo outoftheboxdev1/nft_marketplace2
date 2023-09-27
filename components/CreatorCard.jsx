@@ -48,7 +48,7 @@ const CreatorCard = ({ rank, creatorImage, creatorName, creatorEths }) => {
         <div className="relative w-20 h-20 minlg:w-28 minlg:h-28">
           {imageExists ? (
             <Image
-              src={creatorImage}
+              src={creatorImage.toLowerCase()}
               layout="fill"
               objectFit="cover"
               alt="creator"
