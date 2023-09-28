@@ -1,0 +1,32 @@
+/* FAQ.module.css */
+
+.faqList {
+  list-style: none;
+}
+
+.faqItem {
+  margin-bottom: 20px;
+}
+
+.faqQuestion {
+  cursor: pointer;
+  margin: 0;
+  font-weight: bold;
+}
+
+.faqAnswer {
+  margin: 10px 0;
+  display: none;
+  
+  border-radius: 25px;
+  /* border-color:#DA18A3; */
+  border-style: solid;
+  border-width: 4px;
+  border-image: linear-gradient(#EB1484, #DA18A3) 30;
+  /* border: solid 2px #DA18A3; */
+  padding: 25px;
+}
+
+.faqOpen .faqAnswer {
+  display: block;
+}
