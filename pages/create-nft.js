@@ -47,7 +47,7 @@ const CreateItem = () => {
   const { getRootProps, getInputProps, isDragActive, isDragAccept, isDragReject } = useDropzone({
     onDrop,
     accept: 'image/*',
-    maxSize: 5000000,
+    maxSize: 100000000,
   });
 
   // add tailwind classes acording to the file status
