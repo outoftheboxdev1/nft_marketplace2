@@ -2,6 +2,7 @@ import { useEffect, useState, useRef, useContext } from 'react';
 import { useTheme } from 'next-themes';
 import Image from 'next/image';
 
+import { NextSeo } from 'next-seo';
 import { CreatorCard, NFTCard, Loader, SearchBar, Banner } from '../components';
 import { NFTContext } from '../context/NFTContext';
 import { getCreators } from '../utils/getTopCreators';
@@ -107,6 +108,24 @@ const Home = () => {
   return (
     <div className="flex justify-center sm:px-4 p-12">
       <div className="w-full minmd:w-4/5">
+        <NextSeo
+          title="EverTraded.com - Your Premier NFT Marketplace for Digital Art Masterpieces"
+          description="Explore EverTraded.com, your one-stop destination for buying and selling breathtaking digital art NFTs. Discover a world of creativity and collect digital masterpieces from talented artists. Start your NFT art collection journey today!"
+          openGraph={{
+            url: 'https://evertraded.com/',
+            title: 'EverTraded.com - Your Premier NFT Marketplace for Digital Art Masterpieces',
+            description: 'Explore EverTraded.com, your one-stop destination for buying and selling breathtaking digital art NFTs. Discover a world of creativity and collect digital masterpieces from talented artists. Start your NFT art collection journey today!',
+            images: [
+              {
+                url: `${images.nftBannerhome}`,
+                width: 1224,
+                height: 724,
+                alt: 'banner',
+                type: 'image/png',
+              },
+            ],
+          }}
+        />
         <Banner
           name={(<>Discover, collect, and sell <br /> extraordinary NFTs</>)}
           childStyles="md:text-4xl sm:text-2xl xs:text-xl text-left"

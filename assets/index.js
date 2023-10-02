@@ -37,6 +37,7 @@ import nftBunny from './nft-art-bunny.png';
 import banner01 from './banner01.png';
 import banner02 from './banner02.png';
 import banner03 from './banner03.png';
+import nftBannerhome from './nftBannerhome.png';
 
 export default {
   heartOutline,
@@ -78,4 +79,5 @@ export default {
   banner01,
   banner02,
   banner03,
+  nftBannerhome,
 };

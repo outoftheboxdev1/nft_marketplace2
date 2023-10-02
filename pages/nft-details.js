@@ -4,6 +4,7 @@ import { useState, useEffect, useContext } from 'react';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
 import axios from 'axios';
+import { NextSeo } from 'next-seo';
 import { NFTContext } from '../context/NFTContext';
 import { shortenAddress } from '../utils/shortenAddress';
 import { Button, Loader, Modal } from '../components';
@@ -12,6 +13,23 @@ import { shortenUsername } from '../utils/shortenUsername';
 
 const PaymentBodyCmp = ({ nft, nftCurrency }) => (
   <div className="flex flex-col">
+    <NextSeo
+      title={`EverTraded.com - ${nft.name}`}
+      description={nft.description}
+      openGraph={{
+        url: `https://evertraded.com/nft-details?price=${nft.price}&tokenId=${nft.tokenId}&id=${nft.tokenId}&seller=${nft.seller}&owner=${nft.owner}&image=${nft.image}&description=${nft.description}&tokenURI=${nft.tokenURI}`,
+        title: `EverTraded.com - ${nft.name}`,
+        description: nft.description,
+        images: [
+          {
+            url: `${nft.image}`,
+            width: 1224,
+            height: 724,
+            alt: nft.name,
+          },
+        ],
+      }}
+    />
     <div className="flexBetween">
       <p className="font-poppins dark:text-white text-nft-black-1 font-semibold text-base minlg:text-xl">Item</p>
       <p className="font-poppins dark:text-white text-nft-black-1 font-semibold text-base minlg:text-xl">Subtotal</p>
