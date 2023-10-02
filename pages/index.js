@@ -117,7 +117,7 @@ const Home = () => {
             description: 'Explore EverTraded.com, your one-stop destination for buying and selling breathtaking digital art NFTs. Discover a world of creativity and collect digital masterpieces from talented artists. Start your NFT art collection journey today!',
             images: [
               {
-                url: '../assets/nftBannerhome.png',
+                url: 'https://evertraded-profiles.s3.us-east-2.amazonaws.com/nftBannerhome-min.png',
                 width: 1224,
                 height: 724,
                 alt: 'banner',

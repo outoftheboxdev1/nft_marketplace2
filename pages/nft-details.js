@@ -13,23 +13,6 @@ import { shortenUsername } from '../utils/shortenUsername';
 
 const PaymentBodyCmp = ({ nft, nftCurrency }) => (
   <div className="flex flex-col">
-    <NextSeo
-      title={`EverTraded.com - ${nft.name}`}
-      description={nft.description}
-      openGraph={{
-        url: `https://evertraded.com/nft-details?price=${nft.price}&tokenId=${nft.tokenId}&id=${nft.tokenId}&seller=${nft.seller}&owner=${nft.owner}&image=${nft.image}&description=${nft.description}&tokenURI=${nft.tokenURI}`,
-        title: `EverTraded.com - ${nft.name}`,
-        description: nft.description,
-        images: [
-          {
-            url: `${nft.image}`,
-            width: 1224,
-            height: 724,
-            alt: nft.name,
-          },
-        ],
-      }}
-    />
     <div className="flexBetween">
       <p className="font-poppins dark:text-white text-nft-black-1 font-semibold text-base minlg:text-xl">Item</p>
       <p className="font-poppins dark:text-white text-nft-black-1 font-semibold text-base minlg:text-xl">Subtotal</p>
@@ -127,6 +110,23 @@ const AssetDetails = () => {
 
   return (
     <div className="relative flex justify-center md:flex-col min-h-screen">
+      <NextSeo
+        title={`EverTraded.com - ${nft.name}`}
+        description={nft.description}
+        openGraph={{
+          url: `https://evertraded.com/nft-details?price=${nft.price}&tokenId=${nft.tokenId}&id=${nft.tokenId}&seller=${nft.seller}&owner=${nft.owner}&image=${nft.image}&description=${nft.description}&tokenURI=${nft.tokenURI}`,
+          title: `EverTraded.com - ${nft.name}`,
+          description: nft.description,
+          images: [
+            {
+              url: `${nft.image}`,
+              width: 1224,
+              height: 724,
+              alt: nft.name,
+            },
+          ],
+        }}
+      />
       <div className="relative flex-1 flexCenter sm:px-4 p-12 border-r md:border-r-0 md:border-b dark:border-nft-black-1 border-nft-gray-1">
         <div className="relative w-557 minmd:w-2/3 minmd:h-2/3 sm:w-full sm:h-300 h-557 ">
           <Image src={nft.image || images[`nft${nft.i}`]} objectFit="cover" className=" rounded-xl shadow-lg" layout="fill" />
